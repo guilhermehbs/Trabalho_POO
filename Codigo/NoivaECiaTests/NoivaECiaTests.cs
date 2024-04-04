@@ -6,47 +6,47 @@ namespace NoivaECiaTests
 	public class NoivaECiaTests
 	{
 		[TestMethod]
-		public void TestCasamentoAgendado()
+		public void TestMarriageScheduled()
 		{
 			NoivaECia noivaECia = new NoivaECia();
-			Casamento casamento = noivaECia.AgendarCasamento(100);
+			Mariage mariage = noivaECia.ScheduleWedding(100);
 
-			Assert.IsNotNull(casamento);
+			Assert.IsNotNull(mariage);
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentNullException))]
-		public void TestCasamentoNaoAgendado()
+		public void TestUnscheduledWedding()
 		{
 			NoivaECia noivaECia = new NoivaECia();
-			noivaECia.AgendarCasamento(1000);
+			noivaECia.ScheduleWedding(1000);
 		}
 
 		[TestMethod]
-		public void TestProximaDataDisponivel()
+		public void TestNextDateAvailabe()
 		{
 			NoivaECia noivaECia = new NoivaECia();
-			DateTime data = noivaECia.ProximaDataDisponivel();
+			DateTime data = noivaECia.NextDateAvailabe();
 
 			Assert.AreNotEqual(DateTime.MinValue, data);
 		}
 
 		[TestMethod]
-		public void TestExisteTamanhoDeEspaco()
+		public void TestExistsSpaceSize()
 		{
 			NoivaECia noivaECia = new NoivaECia();
-			Espaco espaco = noivaECia.MelhorEspacoParaCasamento(100);
+			Space space = noivaECia.BestSpaceForWeeding(100);
 
-			Assert.IsNotNull(espaco);
+			Assert.IsNotNull(space);
 		}
 
 		[TestMethod]
-		public void TestNaoExisteTamanhoDeEspaco()
+		public void TestNoExistSpaceSize()
 		{
 			NoivaECia noivaECia = new NoivaECia();
-			Espaco espaco = noivaECia.MelhorEspacoParaCasamento(700);
+			Space space = noivaECia.BestSpaceForWeeding(700);
 
-			Assert.IsNull(espaco);
+			Assert.IsNull(space);
 		}
 	}
 }
