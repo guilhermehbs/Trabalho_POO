@@ -9,7 +9,7 @@ namespace NoivaECiaTests
 		public void TestMarriageScheduled()
 		{
 			NoivaECia noivaECia = new NoivaECia();
-			Mariage mariage = noivaECia.ScheduleWedding(100);
+			Wedding mariage = noivaECia.ScheduleWedding(100);
 
 			Assert.IsNotNull(mariage);
 		}
@@ -35,7 +35,7 @@ namespace NoivaECiaTests
 		public void TestExistsSpaceSize()
 		{
 			NoivaECia noivaECia = new NoivaECia();
-			Space space = noivaECia.BestSpaceForWeeding(100);
+			Space space = noivaECia.BestWeddingSpace(100);
 
 			Assert.IsNotNull(space);
 		}
@@ -44,7 +44,7 @@ namespace NoivaECiaTests
 		public void TestNoExistSpaceSize()
 		{
 			NoivaECia noivaECia = new NoivaECia();
-			Space space = noivaECia.BestSpaceForWeeding(700);
+			Space space = noivaECia.BestWeddingSpace(700);
 
 			Assert.IsNull(space);
 		}

@@ -3,7 +3,7 @@
 	public class NoivaECia
 	{
         public List<Space> ListSpaces { get; private set; }
-		public List<Mariage> ListScheduledWeddings { get; private set; }
+		public List<Wedding> ListScheduledWeddings { get; private set; }
 
 		public NoivaECia()
 		{
@@ -17,21 +17,21 @@
 			ListSpaces.Add(new Space("G", 50));
 			ListSpaces.Add(new Space("H", 500));
 
-			ListScheduledWeddings = new List<Mariage>();
+			ListScheduledWeddings = new List<Wedding>();
 		}
 
-		public Mariage ScheduleWedding(int GuestNumber)
+		public Wedding ScheduleWedding(int NumberOfGuests)
 		{
-			Space bestSpace;
+			Space betterSpace;
 			DateTime date;
-			Mariage mariage;
+			Wedding mariage;
 
 			try
 			{
-				bestSpace = BestSpaceForWeeding(GuestNumber);
+				betterSpace = BestWeddingSpace(NumberOfGuests);
 				date = NextDateAvailabe();
 
-				if (bestSpace == null)
+				if (betterSpace == null)
 				{
 					throw new ArgumentNullException("No space available with this number of guests");
 				}
@@ -40,7 +40,7 @@
 					throw new Exception("There are no dates available");
 				}
 
-				mariage = new Mariage(date, GuestNumber, bestSpace);
+				mariage = new Wedding(date, NumberOfGuests, betterSpace);
 			}
 			catch (ArgumentNullException ex)
 			{
@@ -52,7 +52,7 @@
 			}
 
 			ListScheduledWeddings.Add(mariage);
-			bestSpace.Availabe = false;
+			betterSpace.Availabe = false;
 			return mariage;
 		}
 
@@ -75,13 +75,13 @@
 			return nextDateAvailabe;
 		}
 
-		public Space BestSpaceForWeeding(int numeroConvidados)
+		public Space BestWeddingSpace(int NumberOfGuests)
 		{
 			ListSpaces.OrderBy(e => e.Capacity).ToList();
 
 			foreach(Space space in ListSpaces)
 			{
-				if(space.Capacity >= numeroConvidados && space.Availabe)
+				if(space.Capacity >= NumberOfGuests && space.Availabe)
 				{
 					return space;
 				}
