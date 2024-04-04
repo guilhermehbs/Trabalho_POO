@@ -24,7 +24,7 @@
 		{
 			Space betterSpace;
 			DateTime date;
-			Wedding mariage;
+			Wedding wedding;
 
 			try
 			{
@@ -40,7 +40,7 @@
 					throw new Exception("There are no dates available");
 				}
 
-				mariage = new Wedding(date, NumberOfGuests, betterSpace);
+				wedding = new Wedding(date, NumberOfGuests, betterSpace);
 			}
 			catch (ArgumentNullException ex)
 			{
@@ -51,9 +51,9 @@
 				throw new Exception("Exception: " + ex.Message);
 			}
 
-			ListScheduledWeddings.Add(mariage);
+			ListScheduledWeddings.Add(wedding);
 			betterSpace.Availabe = false;
-			return mariage;
+			return wedding;
 		}
 
 
