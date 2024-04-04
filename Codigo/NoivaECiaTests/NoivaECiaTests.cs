@@ -9,9 +9,9 @@ namespace NoivaECiaTests
 		public void TestMarriageScheduled()
 		{
 			NoivaECia noivaECia = new NoivaECia();
-			Wedding mariage = noivaECia.ScheduleWedding(100);
+			Wedding wedding = noivaECia.ScheduleWedding(100);
 
-			Assert.IsNotNull(mariage);
+			Assert.IsNotNull(wedding);
 		}
 
 		[TestMethod]
@@ -26,9 +26,9 @@ namespace NoivaECiaTests
 		public void TestNextDateAvailabe()
 		{
 			NoivaECia noivaECia = new NoivaECia();
-			DateTime data = noivaECia.NextDateAvailabe();
+			DateTime date = noivaECia.NextDateAvailabe();
 
-			Assert.AreNotEqual(DateTime.MinValue, data);
+			Assert.AreNotEqual(DateTime.MinValue, date);
 		}
 
 		[TestMethod]
