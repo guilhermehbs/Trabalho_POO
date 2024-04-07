@@ -6,6 +6,8 @@
         public int Capacity { get; private set; }
         public bool Availabe { get; set; }
 
+        public Space() { }
+
         public Space(string name, int capacity)
         {
             Name = name;

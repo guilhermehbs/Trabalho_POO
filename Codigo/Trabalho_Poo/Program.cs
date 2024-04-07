@@ -8,7 +8,9 @@ namespace Trabalho_POO
 		{
 			NoivaECia noivaECia = new NoivaECia();
 
-			noivaECia.ScheduleWedding(1000);
+			Wedding wedding = new Wedding();
+
+			noivaECia.CancelWedding(wedding);
 		}
 	}
 }

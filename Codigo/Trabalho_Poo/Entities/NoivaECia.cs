@@ -29,7 +29,7 @@
 			try
 			{
 				betterSpace = BestWeddingSpace(NumberOfGuests);
-				date = NextDateAvailabe();
+				date = NextDateAvailable();
 
 				if (betterSpace == null)
 				{
@@ -56,32 +56,56 @@
 			return wedding;
 		}
 
-
-		public DateTime NextDateAvailabe()
+		public bool CancelWedding(Wedding wedding)
 		{
-			DateTime actualDate = DateTime.Now;
-			DateTime minimumDate = actualDate.AddDays(30);
-
-			DateTime nextDateAvailabe = minimumDate;
-
-			if(DateIsBusy(nextDateAvailabe) || !IsFridayOrSaturday(nextDateAvailabe))
+			try
 			{
-				while(DateIsBusy(nextDateAvailabe) || !IsFridayOrSaturday(nextDateAvailabe))
+				if (wedding == null)
 				{
-					nextDateAvailabe.AddDays(1);
+					throw new ArgumentNullException();
 				}
-			}
 
-			return nextDateAvailabe;
+				if (!ListScheduledWeddings.Contains(wedding))
+				{
+					throw new InvalidOperationException();
+				}
+
+				ListScheduledWeddings.Remove(wedding);
+				return true;
+			}
+			catch (ArgumentNullException)
+			{
+				throw new ArgumentNullException("Wedding cannot be null");
+			}
+			catch (InvalidOperationException)
+			{
+				throw new InvalidOperationException("The wedding was not found in the list");
+			}
 		}
 
-		public Space BestWeddingSpace(int NumberOfGuests)
+
+		public DateTime NextDateAvailable()
+		{
+			DateTime actualDate = DateTime.Today;
+			DateTime minimumDate = actualDate.AddDays(30);
+
+			DateTime nextDateAvailable = minimumDate;
+
+			while (DateIsBusy(nextDateAvailable) || !IsFridayOrSaturday(nextDateAvailable))
+			{
+				nextDateAvailable = nextDateAvailable.AddDays(1);
+			}
+
+			return nextDateAvailable;
+		}
+
+		public Space BestWeddingSpace(int numberOfGuests)
 		{
 			ListSpaces.OrderBy(e => e.Capacity).ToList();
 
 			foreach(Space space in ListSpaces)
 			{
-				if(space.Capacity >= NumberOfGuests && space.Availabe)
+				if(space.Capacity >= numberOfGuests && space.Availabe)
 				{
 					return space;
 				}
