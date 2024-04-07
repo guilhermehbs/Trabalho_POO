@@ -6,7 +6,7 @@ namespace NoivaECiaTests
 	public class NoivaECiaTests
 	{
 		[TestMethod]
-		public void TestMarriageScheduled()
+		public void TestScheduledWedding()
 		{
 			NoivaECia noivaECia = new NoivaECia();
 			Wedding wedding = noivaECia.ScheduleWedding(100);
@@ -47,6 +47,20 @@ namespace NoivaECiaTests
 			Space space = noivaECia.BestWeddingSpace(700);
 
 			Assert.IsNull(space);
+		}
+
+		[TestMethod]
+		public void TestCreatTwoHundredDates()
+		{
+			NoivaECia noivaECia = new NoivaECia();
+
+			for (int i = 0; i < 200; i++)
+			{
+				noivaECia.ScheduleWedding(200);
+			}
+
+			Assert.AreEqual(200, noivaECia.ListScheduledWeddings.Count());
+
 		}
 	}
 }
