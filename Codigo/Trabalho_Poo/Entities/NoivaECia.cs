@@ -20,7 +20,7 @@
 			ListScheduledWeddings = new List<Wedding>();
 		}
 
-		public Wedding ScheduleWedding(int NumberOfGuests)
+		public Wedding ScheduleWedding(int numberOfGuests)
 		{
 			Space betterSpace;
 			DateTime date;
@@ -28,7 +28,7 @@
 
 			try
 			{
-				betterSpace = BestWeddingSpace(NumberOfGuests);
+				betterSpace = BestWeddingSpace(numberOfGuests);
 				date = NextDateAvailable();
 
 				if (betterSpace == null)
@@ -40,7 +40,7 @@
 					throw new Exception("There are no dates available");
 				}
 
-				wedding = new Wedding(date, NumberOfGuests, betterSpace);
+				wedding = new Wedding(date, numberOfGuests, betterSpace);
 			}
 			catch (ArgumentNullException ex)
 			{
@@ -52,7 +52,7 @@
 			}
 
 			ListScheduledWeddings.Add(wedding);
-			betterSpace.Availabe = false;
+			betterSpace.Available = false;
 			return wedding;
 		}
 
@@ -105,7 +105,7 @@
 
 			foreach(Space space in ListSpaces)
 			{
-				if(space.Capacity >= numberOfGuests && space.Availabe)
+				if(space.Capacity >= numberOfGuests && space.Available)
 				{
 					return space;
 				}
