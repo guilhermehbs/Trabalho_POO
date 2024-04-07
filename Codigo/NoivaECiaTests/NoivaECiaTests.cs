@@ -26,7 +26,7 @@ namespace NoivaECiaTests
 		public void TestNextDateAvailabe()
 		{
 			NoivaECia noivaECia = new NoivaECia();
-			DateTime date = noivaECia.NextDateAvailabe();
+			DateTime date = noivaECia.NextDateAvailable();
 
 			Assert.AreNotEqual(DateTime.MinValue, date);
 		}
@@ -50,17 +50,58 @@ namespace NoivaECiaTests
 		}
 
 		[TestMethod]
-		public void TestCreatTwoHundredDates()
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void TestNotExistsSpace()
 		{
 			NoivaECia noivaECia = new NoivaECia();
 
-			for (int i = 0; i < 200; i++)
-			{
-				noivaECia.ScheduleWedding(200);
-			}
+			noivaECia.ScheduleWedding(50);
+			noivaECia.ScheduleWedding(50);
+			noivaECia.ScheduleWedding(50);
+			noivaECia.ScheduleWedding(50);
+			noivaECia.ScheduleWedding(50);
+			noivaECia.ScheduleWedding(50);
+			noivaECia.ScheduleWedding(50);
+			noivaECia.ScheduleWedding(50);
+			noivaECia.ScheduleWedding(50);
+		}
 
-			Assert.AreEqual(200, noivaECia.ListScheduledWeddings.Count());
+		[TestMethod]
+		public void TestCancelWedding()
+		{
+			NoivaECia noivaECia = new NoivaECia();
 
+			Wedding wedding = noivaECia.ScheduleWedding(50);
+
+			noivaECia.CancelWedding(wedding);
+
+			Assert.AreEqual(0, noivaECia.ListScheduledWeddings.Count());
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void TestCancelWeddingNull()
+		{
+			NoivaECia noivaECia = new NoivaECia();
+
+			Wedding wedding = null;
+
+			noivaECia.CancelWedding(wedding);
+
+			Assert.AreEqual(0, noivaECia.ListScheduledWeddings.Count());
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(InvalidOperationException))]
+		public void TestCancelWeddingWasNotScheduled()
+		{
+			NoivaECia noivaECia = new NoivaECia();
+
+			Wedding wedding = new Wedding();
+
+			noivaECia.CancelWedding(wedding);
+
+			Assert.AreEqual(0, noivaECia.ListScheduledWeddings.Count());
 		}
 	}
 }
