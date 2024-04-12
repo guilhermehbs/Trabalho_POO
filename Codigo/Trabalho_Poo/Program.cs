@@ -11,6 +11,7 @@ namespace Trabalho_POO
 			Wedding wedding = new Wedding();
 
 			noivaECia.CancelWedding(wedding);
+
 		}
 	}
 }
