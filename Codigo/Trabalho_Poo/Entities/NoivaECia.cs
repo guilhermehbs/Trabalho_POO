@@ -20,7 +20,7 @@
 			ListScheduledWeddings = new List<Wedding>();
 		}
 
-		public Wedding ScheduleWedding(int numberOfGuests)
+		public Wedding ScheduleWedding(int numberOfGuests, string typeWedding)
 		{
 			Space betterSpace;
 			DateTime date;
@@ -35,16 +35,21 @@
 				{
 					throw new ArgumentNullException("No space available with this number of guests");
 				}
-				if(date == DateTime.MinValue)
+				if (date == DateTime.MinValue)
 				{
 					throw new Exception("There are no dates available");
 				}
 
-				wedding = new Wedding(date, numberOfGuests, betterSpace);
+				wedding = new Wedding(date, numberOfGuests, betterSpace, typeWedding);
 			}
 			catch (ArgumentNullException ex)
 			{
 				throw new ArgumentNullException("Argument Null Exception: " + ex.Message);
+
+			}
+			catch (ArgumentException ex)
+			{
+				throw new ArgumentException("Argument Exception: " + ex.Message);
 			}
 			catch (Exception ex)
 			{

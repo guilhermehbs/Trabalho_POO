@@ -10,7 +10,8 @@ namespace Trabalho_POO
 
 			Wedding wedding = new Wedding();
 
-			noivaECia.CancelWedding(wedding);
+			noivaECia.ScheduleWedding(100, "luxo");
+			//noivaECia.CancelWedding(wedding);
 		}
 	}
 }

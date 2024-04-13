@@ -9,7 +9,7 @@ namespace NoivaECiaTests
 		public void TestScheduledWedding()
 		{
 			NoivaECia noivaECia = new NoivaECia();
-			Wedding wedding = noivaECia.ScheduleWedding(100);
+			Wedding wedding = noivaECia.ScheduleWedding(100,"standard");
 
 			Assert.IsNotNull(wedding);
 		}
@@ -19,7 +19,7 @@ namespace NoivaECiaTests
 		public void TestUnscheduledWedding()
 		{
 			NoivaECia noivaECia = new NoivaECia();
-			noivaECia.ScheduleWedding(1000);
+			noivaECia.ScheduleWedding(1000, "standard");
 		}
 
 		[TestMethod]
@@ -55,15 +55,15 @@ namespace NoivaECiaTests
 		{
 			NoivaECia noivaECia = new NoivaECia();
 
-			noivaECia.ScheduleWedding(50);
-			noivaECia.ScheduleWedding(50);
-			noivaECia.ScheduleWedding(50);
-			noivaECia.ScheduleWedding(50);
-			noivaECia.ScheduleWedding(50);
-			noivaECia.ScheduleWedding(50);
-			noivaECia.ScheduleWedding(50);
-			noivaECia.ScheduleWedding(50);
-			noivaECia.ScheduleWedding(50);
+			noivaECia.ScheduleWedding(50, "standard");
+			noivaECia.ScheduleWedding(50, "standard");
+			noivaECia.ScheduleWedding(50, "standard");
+			noivaECia.ScheduleWedding(50, "standard");
+			noivaECia.ScheduleWedding(50, "standard");
+			noivaECia.ScheduleWedding(50, "standard");
+			noivaECia.ScheduleWedding(50, "standard");
+			noivaECia.ScheduleWedding(50, "standard");
+			noivaECia.ScheduleWedding(50, "standard");
 		}
 
 		[TestMethod]
@@ -71,7 +71,7 @@ namespace NoivaECiaTests
 		{
 			NoivaECia noivaECia = new NoivaECia();
 
-			Wedding wedding = noivaECia.ScheduleWedding(50);
+			Wedding wedding = noivaECia.ScheduleWedding(50, "standard");
 
 			noivaECia.CancelWedding(wedding);
 
@@ -103,5 +103,6 @@ namespace NoivaECiaTests
 
 			Assert.AreEqual(0, noivaECia.ListScheduledWeddings.Count());
 		}
+
 	}
 }
