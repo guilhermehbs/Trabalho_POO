@@ -6,12 +6,7 @@ namespace Trabalho_POO
 	{
 		static void Main(string[] args)
 		{
-			NoivaECia noivaECia = new NoivaECia();
 
-			Wedding wedding = new Wedding();
-
-			noivaECia.ScheduleWedding(100, "luxo");
-			//noivaECia.CancelWedding(wedding);
 		}
 	}
 }

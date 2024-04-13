@@ -4,13 +4,21 @@ namespace Trabalho_POO.Entities
 {
 	public class Space
 	{
+		private static readonly Dictionary<string, double> PriceLists = new Dictionary<string, double>
+		{
+			{ "A", 10000 },
+			{ "B", 10000 },
+			{ "C", 10000 },
+			{ "D", 10000 },
+			{ "E", 17000 },
+			{ "F", 17000 },
+			{ "G", 8000 },
+			{ "H", 35000 }
+		};
 		public string Name { get; private set; }
 		public int Capacity { get; private set; }
 		public bool Available { get; set; }
-
 		public double Price { get; private set; }
-
-		private Dictionary<string, double> PriceLists = new Dictionary<string, double> { { "a", 10000 }, { "b", 10000 }, { "c", 10000 }, { "d", 10000 }, { "e", 17000 }, { "f", 17000 }, { "g", 8000 }, { "h", 35000 } };
 
 		public Space() { }
 
@@ -24,8 +32,9 @@ namespace Trabalho_POO.Entities
 
 		private double SpacePrice(string name)
 		{
-			if (PriceLists.ContainsKey(name.ToLower())) {
-				return PriceLists[name.ToLower()];
+			if (PriceLists.ContainsKey(name.ToUpper())) 
+			{
+				return PriceLists[name.ToUpper()];
 			}
 			throw new ArgumentException("This space does not exist in our database");
 		}
