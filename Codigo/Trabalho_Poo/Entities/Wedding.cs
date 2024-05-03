@@ -1,4 +1,5 @@
-﻿using Trabalho_POO.Entities.Enums;
+﻿
+using Trabalho_POO.Entities.Enums;
 namespace Trabalho_POO.Entities
 {
 	public class Wedding
@@ -11,13 +12,15 @@ namespace Trabalho_POO.Entities
 
 		public Wedding() { }
 
-		public Wedding(DateTime date, int guestNumber, Space space, string typeWedding)
+		public Wedding(DateTime date, int guestNumber, Space space, string typeWedding , Dictionary<string, int> drinkQuantity)
 		{
 			Date = date;
 			NumberOfGuests = guestNumber;
 			Space = space;
 			TypeWedding = DefineTypeWedding(typeWedding);
 			PriceWedding = Items.DefineItemsValue(TypeWedding, NumberOfGuests);
+			PriceWedding += Food.DefineFoodsValue(TypeWedding, NumberOfGuests);
+			PriceWedding += Drinks.DefineDrinksValue(TypeWedding, NumberOfGuests, drinkQuantity);
 
 		}
 

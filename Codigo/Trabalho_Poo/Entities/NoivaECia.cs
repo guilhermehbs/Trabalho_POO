@@ -20,7 +20,7 @@
 			ListScheduledWeddings = new List<Wedding>();
 		}
 
-		public Wedding ScheduleWedding(int numberOfGuests, string typeWedding)
+		public Wedding ScheduleWedding(int numberOfGuests, string typeWedding, Dictionary<string,int> drinkQuantity)
 		{
 			Space betterSpace;
 			DateTime date;
@@ -40,7 +40,7 @@
 					throw new Exception("There are no dates available");
 				}
 
-				wedding = new Wedding(date, numberOfGuests, betterSpace, typeWedding);
+				wedding = new Wedding(date, numberOfGuests, betterSpace, typeWedding, drinkQuantity);
 			}
 			catch (ArgumentNullException ex)
 			{
