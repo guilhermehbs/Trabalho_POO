@@ -4,5 +4,9 @@
 	{
 		public string Name { get; private set; }
 		public int Capacity { get; private set; }
-	}
+
+        public Calendary SpaceCalendary;
+
+
+    }
 }

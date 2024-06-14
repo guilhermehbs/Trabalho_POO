@@ -4,5 +4,5 @@ namespace FestaECia;
 
 public class FestaECia
 {
-    public Calendary calendary;
+
 }

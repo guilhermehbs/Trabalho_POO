@@ -33,4 +33,10 @@ public class Calendary
         return date.DayOfWeek == DayOfWeek.Friday || date.DayOfWeek == DayOfWeek.Saturday;
     }
 
+    public DateTime lastScheduledDay()
+    {
+        if(Dates.Count == 0) { throw new IndexOutOfRangeException("There are no scheduled dates"); }
+        return Dates[Dates.Count - 1];
+    }
+
 }

@@ -70,14 +70,18 @@ class Program
 
 		Calendary calendary = new Calendary();
 
-		DateTime date1 = calendary.ScheduleDate();
+        DateTime date1 = calendary.ScheduleDate();
 		DateTime date2 = calendary.ScheduleDate();
 		DateTime date3 = calendary.ScheduleDate();
-		DateTime date4 = calendary.ScheduleDate();
+
+        DateTime date4 = calendary.ScheduleDate();
 
 		Console.WriteLine(date1.Date.ToString());
 		Console.WriteLine(date2.Date.ToString());
 		Console.WriteLine(date3.Date.ToString());
-		Console.WriteLine(date4.Date.ToString());
-	}
+
+        Console.WriteLine(date4.Date.ToString());
+        Console.WriteLine(calendary.lastScheduledDay().ToString());
+
+    }
 }
