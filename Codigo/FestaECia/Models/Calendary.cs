@@ -13,23 +13,24 @@ public class Calendary
 
     public DateTime ScheduleDate()
     {
-        DateTime nextDate = DateTime.Now.AddDays(30);
-        while (!ValidateDate(nextDate.Date) || !IsFridayOrSaturday(nextDate.Date))
+        DateTime nextDate = DateTime.Now.Date.AddDays(30);
+        while (IsNotValidateDate(nextDate.Date) || !IsFridayOrSaturday(nextDate.Date))
         {
             nextDate = nextDate.AddDays(1);
         }
-        
+
         Dates.Add(nextDate.Date);
         return nextDate.Date;
     }
 
-    public bool ValidateDate(DateTime date)
+    public bool IsNotValidateDate(DateTime date)
     {
         return Dates.Any(d => d.Date == date.Date);
     }
-    
+
     private bool IsFridayOrSaturday(DateTime date)
     {
         return date.DayOfWeek == DayOfWeek.Friday || date.DayOfWeek == DayOfWeek.Saturday;
     }
+
 }
