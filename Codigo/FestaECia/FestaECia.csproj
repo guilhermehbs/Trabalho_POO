@@ -13,4 +13,9 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="FestaECia.cs" />
+    <Compile Remove="Repository\IdRepository.cs" />
+  </ItemGroup>
+
 </Project>

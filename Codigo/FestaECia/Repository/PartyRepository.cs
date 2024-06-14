@@ -115,19 +115,19 @@ public class PartyRepository : IRepository<Party>
 		switch (partyType)
 		{
 			case PartyType.Birthday:
-				party = new Birthday(id, date, numberOfGuests, space, partyType, price);
+				party = new BirthdayParty(id, date, numberOfGuests, space, partyType, price);
 				break;
 			case PartyType.Corporate:
-				party = new Corporate(id, date, numberOfGuests, space, partyType, price);
+				party = new CompanyParty(id, date, numberOfGuests, space, partyType, price);
 				break;
 			case PartyType.Free:
-				party = new Free(id, date, numberOfGuests, space, partyType, price);
+				party = new FreeParty(id, date, numberOfGuests, space, partyType, price);
 				break;
 			case PartyType.Graduation:
-				party = new Graduation(id, date, numberOfGuests, space, partyType, price);
+				party = new GraduationParty(id, date, numberOfGuests, space, partyType, price);
 				break;
 			case PartyType.Wedding:
-				party = new Wedding(id, date, numberOfGuests, space, partyType, price);
+				party = new WeddingParty(id, date, numberOfGuests, space, partyType, price);
 				break;
 			default:
 				throw new InvalidOperationException("Unknown party type");
@@ -135,5 +135,4 @@ public class PartyRepository : IRepository<Party>
 		}
 		return party;
 	}
-
 }

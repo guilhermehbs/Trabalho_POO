@@ -2,7 +2,8 @@
 {
 	public class Space
 	{
-		public string Name { get; private set; }
+		public int Id { get; }
+		public char Name { get; private set; }
 		public int Capacity { get; private set; }
 
         public Calendary SpaceCalendary;
