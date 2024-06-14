@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoivaECia", "Trabalho_POO\NoivaECia.csproj", "{FFE2B213-9787-4F96-8F2F-78736E925256}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FestaECia_antigo", "Trabalho_POO\FestaECia_antigo.csproj", "{FFE2B213-9787-4F96-8F2F-78736E925256}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoivaECiaTests", "NoivaECiaTests\NoivaECiaTests.csproj", "{DAE5E981-2D5C-430E-849A-A87E3A09FAF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FestaECiaTests", "NoivaECiaTests\FestaECiaTests.csproj", "{DAE5E981-2D5C-430E-849A-A87E3A09FAF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FestaECia", "FestaECia\FestaECia.csproj", "{1857B9F0-CA48-4BD0-BA50-98370A6F3E3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{DAE5E981-2D5C-430E-849A-A87E3A09FAF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAE5E981-2D5C-430E-849A-A87E3A09FAF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAE5E981-2D5C-430E-849A-A87E3A09FAF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1857B9F0-CA48-4BD0-BA50-98370A6F3E3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1857B9F0-CA48-4BD0-BA50-98370A6F3E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1857B9F0-CA48-4BD0-BA50-98370A6F3E3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1857B9F0-CA48-4BD0-BA50-98370A6F3E3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

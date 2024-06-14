@@ -1,11 +1,11 @@
 ﻿namespace Trabalho_POO.Entities
 {
-	public class NoivaECia
+	public class FestaECia
 	{
         public List<Space> ListSpaces { get; private set; }
 		public List<Wedding> ListScheduledWeddings { get; private set; }
 
-		public NoivaECia()
+		public FestaECia()
 		{
 			ListSpaces = new List<Space>();
 			ListSpaces.Add(new Space("A", 100));

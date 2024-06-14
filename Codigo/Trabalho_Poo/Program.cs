@@ -11,7 +11,7 @@ namespace Trabalho_POO
             string[] auxVet = ["sparking water", "juice", "soda", "beer", "national sparkling wine", "draft beer", "imported sparkling wine"];
 			int drinksLenght;
 			Wedding wedding = new Wedding();
-			NoivaECia noivaECia = new NoivaECia();
+			FestaECia noivaECia = new FestaECia();
 			string type = "standard";
 
 		

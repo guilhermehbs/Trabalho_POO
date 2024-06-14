@@ -8,7 +8,7 @@ namespace NoivaECiaTests
 		[TestMethod]
 		public void TestScheduledWedding()
 		{
-			NoivaECia noivaECia = new NoivaECia();
+			FestaECia noivaECia = new FestaECia();
 			Wedding wedding = noivaECia.ScheduleWedding(100,"standard");
 
 			Assert.IsNotNull(wedding);
@@ -18,14 +18,14 @@ namespace NoivaECiaTests
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void TestUnscheduledWedding()
 		{
-			NoivaECia noivaECia = new NoivaECia();
+			FestaECia noivaECia = new FestaECia();
 			noivaECia.ScheduleWedding(1000, "standard");
 		}
 
 		[TestMethod]
 		public void TestNextDateAvailabe()
 		{
-			NoivaECia noivaECia = new NoivaECia();
+			FestaECia noivaECia = new FestaECia();
 			DateTime date = noivaECia.NextDateAvailable();
 
 			Assert.AreNotEqual(DateTime.MinValue, date);
@@ -34,7 +34,7 @@ namespace NoivaECiaTests
 		[TestMethod]
 		public void TestExistsSpaceSize()
 		{
-			NoivaECia noivaECia = new NoivaECia();
+			FestaECia noivaECia = new FestaECia();
 			Space space = noivaECia.BestWeddingSpace(100);
 
 			Assert.IsNotNull(space);
@@ -43,7 +43,7 @@ namespace NoivaECiaTests
 		[TestMethod]
 		public void TestNoExistSpaceSize()
 		{
-			NoivaECia noivaECia = new NoivaECia();
+			FestaECia noivaECia = new FestaECia();
 			Space space = noivaECia.BestWeddingSpace(700);
 
 			Assert.IsNull(space);
@@ -53,7 +53,7 @@ namespace NoivaECiaTests
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void TestNotExistsSpace()
 		{
-			NoivaECia noivaECia = new NoivaECia();
+			FestaECia noivaECia = new FestaECia();
 
 			noivaECia.ScheduleWedding(50, "standard");
 			noivaECia.ScheduleWedding(50, "standard");
@@ -69,7 +69,7 @@ namespace NoivaECiaTests
 		[TestMethod]
 		public void TestCancelWedding()
 		{
-			NoivaECia noivaECia = new NoivaECia();
+			FestaECia noivaECia = new FestaECia();
 
 			Wedding wedding = noivaECia.ScheduleWedding(50, "standard");
 
@@ -82,7 +82,7 @@ namespace NoivaECiaTests
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void TestCancelWeddingNull()
 		{
-			NoivaECia noivaECia = new NoivaECia();
+			FestaECia noivaECia = new FestaECia();
 
 			Wedding wedding = null;
 
@@ -95,7 +95,7 @@ namespace NoivaECiaTests
 		[ExpectedException(typeof(InvalidOperationException))]
 		public void TestCancelWeddingWasNotScheduled()
 		{
-			NoivaECia noivaECia = new NoivaECia();
+			FestaECia noivaECia = new FestaECia();
 
 			Wedding wedding = new Wedding();
 

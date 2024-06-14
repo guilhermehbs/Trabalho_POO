@@ -5,14 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Trabalho_POO.Entities.Enums;
 
-namespace Trabalho_POO.Entities
+namespace FestaECia.Services
 {
-	static class Drinks
+	public class DrinkService
 	{
-
-		public static double DefineDrinksValue(Types typeWedding, int numberOfGuests, Dictionary<string,int> totalDrinks)
+		public static double DefineDrinksValue(CategoryType typeWedding, int numberOfGuests, Dictionary<string, int> totalDrinks)
 		{
-			 Dictionary<string, double> drinksValue = new Dictionary<string, double>()
+			Dictionary<string, double> drinksValue = new Dictionary<string, double>()
 			{
 				{"sparking water", 5.00},
 				{"juice", 7.00},
@@ -25,14 +24,12 @@ namespace Trabalho_POO.Entities
 
 			double valueTotal = 0;
 
-			foreach(var keyValuePair in totalDrinks)
+			foreach (var keyValuePair in totalDrinks)
 			{
 				valueTotal += (drinksValue[keyValuePair.Key] * numberOfGuests);
 			}
-
 			return valueTotal;
 		}
 
-		
 	}
 }

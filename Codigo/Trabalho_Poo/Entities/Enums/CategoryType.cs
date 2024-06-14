@@ -1,6 +1,6 @@
 ﻿namespace Trabalho_POO.Entities.Enums
 {
-	public enum Types : int
+	public enum CategoryType
 	{
 		Premier = 1,
 		Luxo = 2,
