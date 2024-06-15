@@ -12,8 +12,19 @@ public abstract class Party : IParty
     public double Price { get; private set; }
     public List<Food> Foods { get; private set; }
     public List<Drink> Drinks { get; private set; }
-    
-    public Party(int id, DateTime date, int numberOfGuests, Space space, PartyType type, double price)
+
+	public Party(DateTime date, int numberOfGuests, PartyType type, double price)
+	{
+		Date = date;
+		NumberOfGuests = numberOfGuests;
+		Type = type;
+		Price = price;
+		Foods = new List<Food>();
+		Drinks = new List<Drink>();
+	}
+
+    //construtor usado pelo banco
+	public Party(int id, DateTime date, int numberOfGuests, Space space, PartyType type, double price)
     {
         Id = id;
         Date = date;

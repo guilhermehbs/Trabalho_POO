@@ -4,7 +4,12 @@ namespace FestaECia.Models;
 
 public class BirthdayParty : Party 
 {
-   public BirthdayParty(int id, DateTime date, int numberOfGuests, Space space, PartyType type, double price) : 
+	public BirthdayParty(DateTime date, int numberOfGuests, PartyType type, double price) :
+		base(date, numberOfGuests, type, price)
+	{
+	}
+
+	public BirthdayParty(int id, DateTime date, int numberOfGuests, Space space, PartyType type, double price) : 
         base(id, date, numberOfGuests, space, type, price)
     {
     }
