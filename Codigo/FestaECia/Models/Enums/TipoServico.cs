@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace FestaECia.Models.Enums
 {
-	public enum PartyType
+	public enum TipoServico
 	{
-		Wedding,
-		Birthday,
-		Graduation,
-		Corporate,
-		Free
+		Standard,
+		Luxo,
+		Premier
 	}
 }

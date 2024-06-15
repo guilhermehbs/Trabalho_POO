@@ -2,7 +2,7 @@
 {
 	public interface IGet<T>
 	{
-		List<T> GetAll();
-		T GetById(int id);
+		List<T> ListarTodos();
+		T PegarPorId(int id);
 	}
 }

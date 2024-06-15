@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace FestaECia.Models.Enums
 {
-	public enum ServiceType
+	public enum TipoFesta
 	{
-		Standard,
-		Luxury,
-		Premier
+		Casamento,
+		FestaDeAniversario,
+		FestaDeFormatura,
+		FestaDaEmpresa,
+		FestaLivre
 	}
 }

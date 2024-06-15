@@ -5,51 +5,60 @@ namespace FestaECia.Services;
 
 public class FestaECiaService
 {
-	private readonly PartyRepository _partyRepository;
-	public CalendaryService calendary;
-	public SpaceService spaceService;
+	private readonly FestaRepository _festaRepository;
+	public CalendarioService Calendario;
+	public EspacoService EspacoService;
 
-	public FestaECiaService(PartyRepository partyRepository)
+	public FestaECiaService(FestaRepository festaRepository)
 	{
-		_partyRepository = partyRepository;
-		calendary = new CalendaryService();
-		spaceService = new SpaceService(new SpaceRepository());
+		_festaRepository = festaRepository;
+		Calendario = new CalendarioService();
+		EspacoService = new EspacoService(new EspacoRepository());
 	}
 
-	public void ScheduleParty(Party party)
+	public void MarcarFesta(Festa festa)
 	{
-		DateTime date = calendary.ScheduleDate();
-		List<Space> spacesAvailabe = spaceService.QuantityAvailabeSpaceList(party.NumberOfGuests);
-		foreach (Space space in spacesAvailabe)
+		List<Espaco> listaDeEspacosDisponiveis = EspacoService.ListaDeEspacosDisponiveis(festa.NumeroDeConvidados);
+		DateTime data = Calendario.MarcarData();
+		double preco = 0.0;
+		
+		bool marcou = false;
+		while (!marcou)
 		{
-			if (!space.DatasMarcadas.Contains(date))
+			foreach (Espaco espaco in listaDeEspacosDisponiveis)
 			{
-				Console.WriteLine("Marcado no espaço " + space.Name);
-				Console.WriteLine("Marcado na data " + date);
-				break;
+				if (!espaco.DatasMarcadas.Contains(data))
+				{
+					festa.SpaceId = espaco.Id;
+					preco += espaco.Preco;
+					festa.Data = data;
+					marcou = true;
+					break;
+				}
 			}
+			data = Calendario.MarcarData(data);
 		}
 
-		//_partyRepository.Insert(party);
+		preco += ComidaService.DefinirValorComidas(festa);
+		preco += ItemService.DefinirValorItens(festa);
+		preco += BebidaService.DefinirValorBebidas(festa);
+
+		festa.Preco = preco;
+		//_partyRepository.Inserir(party);
 	}
 
-	public void UpdateParty(Party party)
+	public void DeletarFesta(int id)
 	{
-		_partyRepository.Update(party);
+		_festaRepository.Deletar(id);
 	}
 
-	public void DeleteParty(int id)
+	public List<Festa> ListarTodasFestas()
 	{
-		_partyRepository.Delete(id);
+		return _festaRepository.ListarTodos();
 	}
 
-	public List<Party> ListAllParties()
+	public Festa PegarFestaPorId(int id)
 	{
-		return _partyRepository.GetAll();
-	}
-
-	public Party GetPartyById(int id)
-	{
-		return _partyRepository.GetById(id);
+		return _festaRepository.PegarPorId(id);
 	}
 }

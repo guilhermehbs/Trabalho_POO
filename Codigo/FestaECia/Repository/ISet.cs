@@ -2,10 +2,8 @@
 {
 	public interface ISet<T>
 	{
-		public void Insert(T entity);
+		public void Inserir(T entidade);
 
-		public void Update(T entity);
-
-		public void Delete(int id);
+		public void Deletar(int id);
 	}
 }
