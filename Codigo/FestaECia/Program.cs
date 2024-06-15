@@ -1,4 +1,5 @@
 ﻿using FestaECia.Models;
+using FestaECia.Models.Enums;
 using FestaECia.Repository;
 using FestaECia.Services;
 
@@ -66,7 +67,6 @@ class Program
 	{
 
 	}
-	*/
 
 		Calendary calendary = new Calendary();
 
@@ -82,6 +82,22 @@ class Program
 
         Console.WriteLine(date4.Date.ToString());
         Console.WriteLine(calendary.lastScheduledDay().ToString());
+		*/
 
-    }
+		SpaceRepository spaceRepository = new SpaceRepository();
+
+		List<Space> list = spaceRepository.GetAll();
+
+		foreach (Space space in list)
+		{
+			Console.WriteLine(space);
+		}
+
+		PartyRepository repository = new PartyRepository();
+		FestaECiaService festa = new FestaECiaService(repository);
+		BirthdayParty party = new BirthdayParty(DateTime.Now, 50, PartyType.Free, 1000);
+
+
+		festa.ScheduleParty(party);
+	}
 }

@@ -4,7 +4,7 @@ using FestaECia.Models.Enums;
 
 namespace FestaECia.Repository;
 
-public class PartyRepository : IRepository<Party>
+public class PartyRepository : IGet<Party>, ISet<Party>
 {
 	private readonly Database _database;
 
@@ -13,7 +13,7 @@ public class PartyRepository : IRepository<Party>
 		_database = new Database();
 	}
 
-	public IEnumerable<Party> GetAll()
+	public List<Party> GetAll()
 	{
 		var parties = new List<Party>();
 
@@ -39,7 +39,7 @@ public class PartyRepository : IRepository<Party>
 		using (var connection = _database.GetConnection())
 		{
 			connection.Open();
-			var command = new SqlCommand("SELECT * FROM Party WHERE Id = @Id", connection);
+			var command = new SqlCommand($"SELECT * FROM tb_space WHERE Id = {id}", connection);
 			command.Parameters.AddWithValue("@Id", id);
 
 			using (var reader = command.ExecuteReader())
@@ -59,14 +59,8 @@ public class PartyRepository : IRepository<Party>
 		using (var connection = _database.GetConnection())
 		{
 			connection.Open();
-			var command = new SqlCommand("INSERT INTO tb_party (Id, Date, NumberOfGuests, Space, Type, Price) VALUES (@Id, @Date, @NumberOfGuests, @Space, @Type, @Price)", connection);
-			command.Parameters.AddWithValue("@Id", party.Id);
-			command.Parameters.AddWithValue("@Date", party.Date);
-			command.Parameters.AddWithValue("@NumberOfGuests", party.NumberOfGuests);
-			command.Parameters.AddWithValue("@Space", party.Space.Name);
-			command.Parameters.AddWithValue("@Type", party.Type);
-			command.Parameters.AddWithValue("@Price", party.Price);
-
+			var command = new SqlCommand($"INSERT INTO tb_party (date, number_of_guests, space_id, type_party, price) VALUES" +
+			                             $"('{party.Date}', {party.NumberOfGuests}, {party.Space.Id}, '{party.Type}', {party.Price})", connection);
 			command.ExecuteNonQuery();
 		}
 	}
@@ -76,13 +70,8 @@ public class PartyRepository : IRepository<Party>
 		using (var connection = _database.GetConnection())
 		{
 			connection.Open();
-			var command = new SqlCommand("UPDATE Party SET Id = @Id, Date = @Location, NumberOfGuests = @NumberOfGuests, Space = @Space, Type = @Type, Price = @Price WHERE Id = @Id", connection);
-			command.Parameters.AddWithValue("@Id", party.Id);
-			command.Parameters.AddWithValue("@Date", party.Date);
-			command.Parameters.AddWithValue("@NumberOfGuests", party.NumberOfGuests);
-			command.Parameters.AddWithValue("@Space", party.Space.Name);
-			command.Parameters.AddWithValue("@Type", party.Type);
-			command.Parameters.AddWithValue("@Price", party.Price);
+			var command = new SqlCommand($"UPDATE tb_party SET date = '{party.Date}', number_of_guests = {party.NumberOfGuests}, space_id = {party.Space.Id}, " +
+			                             $"type_party = '{party.Type}', price = {party.Price} WHERE id = {party.Id}", connection);
 
 			command.ExecuteNonQuery();
 		}
@@ -93,8 +82,7 @@ public class PartyRepository : IRepository<Party>
 		using (var connection = _database.GetConnection())
 		{
 			connection.Open();
-			var command = new SqlCommand("DELETE FROM Party WHERE Id = @Id", connection);
-			command.Parameters.AddWithValue("@Id", id);
+			var command = new SqlCommand($"DELETE FROM tb_party WHERE Id = {id}", connection);
 
 			command.ExecuteNonQuery();
 		}
