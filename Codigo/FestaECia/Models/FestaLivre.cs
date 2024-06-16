@@ -4,7 +4,11 @@ namespace FestaECia.Models;
 
 public class FestaLivre : Festa
 {
-    public FestaLivre(int id, DateTime data, int numeroDeConvidados, int spaceId, TipoServico tipoServico, double preco) : 
+	public FestaLivre(int numeroDeConvidados, TipoServico tipoServico, List<Comida> comidas, Dictionary<string, int> bebidas) :
+		base(numeroDeConvidados, tipoServico, comidas, bebidas)
+	{
+	}
+	public FestaLivre(int id, DateTime data, int numeroDeConvidados, int spaceId, TipoServico tipoServico, double preco) : 
         base(id, data, numeroDeConvidados, spaceId, tipoServico, preco)
     {
     }

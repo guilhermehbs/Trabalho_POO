@@ -15,39 +15,69 @@ public class FestaRepository : IGet<Festa>, ISet<Festa>
 
 	public List<Festa> ListarTodos()
 	{
-		var festas = new List<Festa>();
-
-		using (var conexao = _database.Conectar())
+		try
 		{
-			conexao.Open();
-			var comando = new SqlCommand("SELECT * FROM tb_party", conexao);
+			var festas = new List<Festa>();
 
-			using (var leitor = comando.ExecuteReader())
+			using (var conexao = _database.Conectar())
 			{
-				while (leitor.Read())
+				conexao.Open();
+				var comando = new SqlCommand("SELECT * FROM tb_party", conexao);
+
+				using (var leitor = comando.ExecuteReader())
 				{
-					festas.Add(CriarFesta(leitor));
+					while (leitor.Read())
+					{
+						festas.Add(CriarFesta(leitor));
+					}
 				}
 			}
-		}
 
-		return festas;
+			return festas;
+		}
+		catch (SqlException ex)
+		{
+			throw new Exception("Erro ao fazer a consulta no banco de dados" + ex.Message);
+		}
+		catch (Exception ex)
+		{
+			throw new Exception("Erro inesperado ao consultar as festas: " + ex.Message);
+		}
 	}
 
 	public Festa PegarPorId(int id)
 	{
-		using (var conexao = _database.Conectar())
+		try
 		{
-			conexao.Open();
-			var comando = new SqlCommand($"SELECT * FROM tb_space WHERE Id = {id}", conexao);
-
-			using (var leitor = comando.ExecuteReader())
+			using (var conexao = _database.Conectar())
 			{
-				if (leitor.Read())
+				conexao.Open();
+				var comando = new SqlCommand($"SELECT * FROM tb_space WHERE Id = {id}", conexao);
+
+				using (var leitor = comando.ExecuteReader())
 				{
-					return CriarFesta(leitor);
+					if (leitor.Read())
+					{
+						return CriarFesta(leitor);
+					}
 				}
 			}
+		}
+		catch (InvalidOperationException ex)
+		{
+			throw new InvalidOperationException("Erro ao acessar um elemento da festa: " + ex.Message);
+		}
+		catch (SqlException ex)
+		{
+			throw new Exception("Erro ao fazer a consulta no banco de dados" + ex.Message);
+		}
+		catch (ArgumentException)
+		{
+			throw new ArgumentException("Número de id informado não é inteiro");
+		}
+		catch (Exception ex)
+		{
+			throw new Exception("Erro inesperado ao consultar a festa: " + ex.Message);
 		}
 
 		return null;
@@ -55,59 +85,124 @@ public class FestaRepository : IGet<Festa>, ISet<Festa>
 
 	public void Inserir(Festa festa)
 	{
-		using (var conexao = _database.Conectar())
+		try
 		{
-			conexao.Open();
-			var comando = new SqlCommand($"INSERT INTO tb_party (date, number_of_guests, space_id, type_party, price, partyType) VALUES" +
-			                             $"('{festa.Data}', {festa.NumeroDeConvidados}, {festa.SpaceId}, '{festa.TipoServico}', {festa.Preco}, '{festa.RetornarTipo()}'", conexao);
-			comando.ExecuteNonQuery();
+			using (var conexao = _database.Conectar())
+			{
+
+				conexao.Open();
+
+				var comando = new SqlCommand(
+					$"INSERT INTO tb_party (date, number_of_guests, space_id, type_party, price, partyType) VALUES" +
+					$"('{festa.Data}', {festa.NumeroDeConvidados}, {festa.SpaceId}, '{festa.TipoServico}', {festa.Preco}, '{festa.RetornarTipo()}'",
+					conexao);
+
+				comando.ExecuteNonQuery();
+			}
+		}
+		catch (SqlException ex)
+		{
+			// Erro de chave estrangeira
+			if (ex.Number == 547)
+			{
+				throw new Exception("Impossível deletar a festa, pois existem eventos associados a ela");
+			}
+
+			throw new Exception("Erro ao deletar a festa" + ex.Message);
+		}
+		catch (ArgumentException)
+		{
+			throw new ArgumentException("Tipo informado não é uma festa");
+		}
+		catch (Exception ex)
+		{
+			throw new Exception("Erro ao inserir festa no banco de dados" + ex.Message);
 		}
 	}
 
 	public void Deletar(int id)
 	{
-		using (var conexao = _database.Conectar())
+		try
 		{
-			conexao.Open();
-			var comando = new SqlCommand($"DELETE FROM tb_party WHERE Id = {id}", conexao);
+			using (var conexao = _database.Conectar())
+			{
+				conexao.Open();
 
-			comando.ExecuteNonQuery();
+				var comando = new SqlCommand($"DELETE FROM tb_party WHERE Id = {id}", conexao);
+				
+				int linhasAfetadas = comando.ExecuteNonQuery();
+				if (linhasAfetadas == 0)
+				{
+					throw new Exception($"Nenhum registro encontrado com o ID {id}");
+				}
+			}
+		}
+		catch (SqlException ex)
+		{
+			// Erro de chave estrangeira
+			if (ex.Number == 547)
+			{
+				throw new Exception("Impossível deletar a festa, pois existem eventos associados a ela");
+			}
+			else
+			{
+				throw new Exception("Erro ao deletar a festa" + ex.Message);
+			}
+		}
+		catch (ArgumentException)
+		{
+			throw new ArgumentException("Número de id informado não é inteiro");
+		}
+		catch (Exception ex)
+		{
+			throw new Exception("Erro ao deletar a festa" + ex.Message);
 		}
 	}
 
 	private Festa CriarFesta(SqlDataReader reader)
 	{
-		int id = (int)reader["id"];
-		DateTime data = (DateTime)reader["date"];
-		int numeroDeConvidados = (int)reader["number_of_people"];
-		int spaceId = (int)reader["space_id"];
-		TipoServico tipoServico = (TipoServico)reader["space_id"];
-		double preco = (double)reader["Price"];
-		string tipoFesta = (string)reader["party_type"];
-		
-		Festa festa;
-
-		switch (tipoFesta)
+		try
 		{
-			case "Festa de aniversario":
-				festa = new FestaDeAniversario(id, data, numeroDeConvidados, spaceId, tipoServico, preco);
-				break;
-			case "Festa da empresa":
-				festa = new FestaDaEmpresa(id, data, numeroDeConvidados, spaceId, tipoServico, preco);
-				break;
-			case "Festa livre":
-				festa = new FestaLivre(id, data, numeroDeConvidados, spaceId, tipoServico, preco);
-				break;
-			case "Festa de formatura":
-				festa = new FestaDeFormatura(id, data, numeroDeConvidados, spaceId, tipoServico, preco);
-				break;
-			case "Casamento":
-				festa = new Casamento(id, data, numeroDeConvidados, spaceId, tipoServico, preco);
-				break;
-			default:
-				throw new InvalidOperationException("Unknown party type");
-				break;
+			int id = (int)reader["id"];
+			DateTime data = (DateTime)reader["date"];
+			int numeroDeConvidados = (int)reader["number_of_people"];
+			int spaceId = (int)reader["space_id"];
+			TipoServico tipoServico = (TipoServico)reader["space_id"];
+			double preco = (double)reader["Price"];
+			string tipoFesta = (string)reader["party_type"];
+
+			Festa festa;
+
+			switch (tipoFesta)
+			{
+				case "Festa de aniversario":
+					festa = new FestaDeAniversario(id, data, numeroDeConvidados, spaceId, tipoServico, preco);
+					break;
+				case "Festa da empresa":
+					festa = new FestaDaEmpresa(id, data, numeroDeConvidados, spaceId, tipoServico, preco);
+					break;
+				case "Festa livre":
+					festa = new FestaLivre(id, data, numeroDeConvidados, spaceId, tipoServico, preco);
+					break;
+				case "Festa de formatura":
+					festa = new FestaDeFormatura(id, data, numeroDeConvidados, spaceId, tipoServico, preco);
+					break;
+				case "Casamento":
+					festa = new Casamento(id, data, numeroDeConvidados, spaceId, tipoServico, preco);
+					break;
+				default:
+					throw new InvalidOperationException($"Tipo de festa inválido: {tipoFesta}");
+			}
+
+			return festa;
 		}
-		return festa;
+		catch (InvalidOperationException ex)
+		{
+			throw new InvalidOperationException("Erro ao acessar um elemento da festa: " + ex.Message);
+		}
+		catch (Exception ex)
+		{
+			throw new Exception("Erro inesperado ao criar festa: " + ex.Message);
+		}
 	}
 }

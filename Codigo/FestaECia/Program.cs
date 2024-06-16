@@ -83,5 +83,12 @@ class Program
         Console.WriteLine(date4.Date.ToString());
         Console.WriteLine(calendary.lastScheduledDay().ToString());
 		*/
+
+		FestaRepository repository = new FestaRepository();	
+		FestaECiaService service = new FestaECiaService(repository);
+
+		List<Comida> comidas = new List<Comida>();
+
+		Festa festa = new FestaDeAniversario(100, TipoServico.Premier, )
 	}
 }

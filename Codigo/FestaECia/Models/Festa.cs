@@ -11,16 +11,15 @@ public abstract class Festa : IFesta
     public TipoServico TipoServico { get;  set; }
     public TipoFesta TipoFesta { get;  set; }
     public double Preco { get;  set; }
-    public List<Comida> Foods { get; set; }
+    public List<Comida> Comidas { get; set; }
     public Dictionary<string, int> Bebidas { get; set; }
 
-	public Festa(DateTime data, int numeroDeConvidados, TipoServico tipoServico)
+	public Festa(int numeroDeConvidados, TipoServico tipoServico, List<Comida> comidas, Dictionary<string, int> bebidas)
 	{
-		Data = data;
 		NumeroDeConvidados = numeroDeConvidados;
 		TipoServico = tipoServico;
-		Foods = new List<Comida>();
-		Bebidas = new Dictionary<string, int>();
+		Comidas = comidas;
+		Bebidas = bebidas;
 	}
 
     //construtor usado pelo banco
@@ -32,7 +31,7 @@ public abstract class Festa : IFesta
         SpaceId = spaceId;
         TipoServico = tipoServico;
         Preco = preco;
-        Foods = new List<Comida>();
+        Comidas = new List<Comida>();
         Bebidas = new Dictionary<string, int>();
     }
 
