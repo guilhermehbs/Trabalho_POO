@@ -21,7 +21,7 @@ public class FestaECiaService
 		List<Espaco> listaDeEspacosDisponiveis = EspacoService.ListaDeEspacosDisponiveis(festa.NumeroDeConvidados);
 		DateTime data = Calendario.MarcarData();
 		double preco = 0.0;
-		
+		int capacidadeEspaco = 0; 
 		bool marcou = false;
 		while (!marcou)
 		{
@@ -31,8 +31,11 @@ public class FestaECiaService
 				{
 					festa.SpaceId = espaco.Id;
 					preco += espaco.Preco;
+					capacidadeEspaco += espaco.Capacidade;
 					festa.Data = data;
-					marcou = true;
+                    EspacoService.MarcarData(data.ToString("dd-MM-yyyy"), festa.SpaceId);
+
+                    marcou = true;
 					break;
 				}
 			}
@@ -40,11 +43,14 @@ public class FestaECiaService
 		}
 
 		preco += ComidaService.DefinirValorComidas(festa);
-		preco += ItemService.DefinirValorItens(festa);
+		preco += ItemService.DefinirValorItens(festa, capacidadeEspaco);
 		preco += BebidaService.DefinirValorBebidas(festa);
 
 		festa.Preco = preco;
-		//_partyRepository.Inserir(party);
+
+        _festaRepository.Inserir(festa);
+		
+	
 	}
 
 	public void DeletarFesta(int id)

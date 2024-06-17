@@ -35,4 +35,8 @@ public class EspacoService
 	{
 		return _espacoRepository.PegarPorId(id);
 	}
+    public bool MarcarData(string data, int id)
+	{
+		return _espacoRepository.MarcarData(data, id);
+	}
 }

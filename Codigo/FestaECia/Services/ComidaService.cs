@@ -14,15 +14,15 @@ public class ComidaService
         }
         if (festa.TipoServico.Equals(TipoServico.Premier))
         {
-            return 240 * festa.NumeroDeConvidados;
+            return 60 * festa.NumeroDeConvidados;
         }
         else if (festa.TipoServico.Equals(TipoServico.Luxo))
         {
-            return 192 * festa.NumeroDeConvidados;
+            return 48 * festa.NumeroDeConvidados;
         }
         else if (festa.TipoServico.Equals(TipoServico.Standard))
         {
-            return 160 * festa.NumeroDeConvidados;
+            return 40 * festa.NumeroDeConvidados;
         }
         else
         {

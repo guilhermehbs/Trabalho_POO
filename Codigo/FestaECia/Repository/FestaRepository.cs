@@ -89,15 +89,15 @@ public class FestaRepository : IGet<Festa>, ISet<Festa>
 		{
 			using (var conexao = _database.Conectar())
 			{
-
-				conexao.Open();
-
-				var comando = new SqlCommand(
-					$"INSERT INTO tb_party (date, number_of_guests, space_id, type_party, price, partyType) VALUES" +
-					$"('{festa.Data}', {festa.NumeroDeConvidados}, {festa.SpaceId}, '{festa.TipoServico}', {festa.Preco}, '{festa.RetornarTipo()}'",
+                conexao.Open();
+            
+                var comando = new SqlCommand(
+					$"INSERT INTO tb_party (date_party, number_of_guests, space_id, type_party, price, party_type) VALUES" +
+					$"('{festa.Data.Date.ToString("dd-MM-yyyy")}', {festa.NumeroDeConvidados}, {festa.SpaceId}, '{festa.TipoServico}', {festa.Preco}, '{festa.RetornarTipo()}')",
 					conexao);
-
-				comando.ExecuteNonQuery();
+           
+				
+                comando.ExecuteNonQuery();
 			}
 		}
 		catch (SqlException ex)
@@ -108,7 +108,7 @@ public class FestaRepository : IGet<Festa>, ISet<Festa>
 				throw new Exception("Impossível deletar a festa, pois existem eventos associados a ela");
 			}
 
-			throw new Exception("Erro ao deletar a festa" + ex.Message);
+			throw new Exception("Erro ao inserir a festa" + ex.Message);
 		}
 		catch (ArgumentException)
 		{
@@ -164,8 +164,11 @@ public class FestaRepository : IGet<Festa>, ISet<Festa>
 		try
 		{
 			int id = (int)reader["id"];
-			DateTime data = (DateTime)reader["date"];
-			int numeroDeConvidados = (int)reader["number_of_people"];
+            string dataString = (string)reader["date"];
+
+            DateTime data = DateTime.Parse(dataString);
+
+            int numeroDeConvidados = (int)reader["number_of_people"];
 			int spaceId = (int)reader["space_id"];
 			TipoServico tipoServico = (TipoServico)reader["space_id"];
 			double preco = (double)reader["Price"];

@@ -83,12 +83,29 @@ class Program
         Console.WriteLine(date4.Date.ToString());
         Console.WriteLine(calendary.lastScheduledDay().ToString());
 		*/
+		for (int i = 0; i < 5; i++) {
 
-		FestaRepository repository = new FestaRepository();	
-		FestaECiaService service = new FestaECiaService(repository);
+            FestaRepository repository = new FestaRepository();
+            FestaECiaService service = new FestaECiaService(repository);
 
-		List<Comida> comidas = new List<Comida>();
+            List<Comida> comidas = new List<Comida>();
+            Dictionary<string, int> bebidas = new Dictionary<string, int>()
+            {
+                {"agua sem gas", 10},
+                {"suco", 10},
+                {"refrigerante", 10},
+                {"cerveja comum", 10},
+                {"cerveja artesanal", 1},
+                {"espumante nacional", 10},
+                {"espumante importado", 10}
+            };
 
-		Festa festa = new FestaDeAniversario(100, TipoServico.Premier, )
+            Festa festa = new FestaDeAniversario(201, TipoServico.Premier, comidas, bebidas);
+
+            service.MarcarFesta(festa);
+        }
+
+        
+ 
 	}
 }
