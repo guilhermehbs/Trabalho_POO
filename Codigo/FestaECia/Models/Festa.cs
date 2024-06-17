@@ -1,3 +1,4 @@
+using System.Text;
 using FestaECia.Models.Enums;
 
 namespace FestaECia.Models;
@@ -13,8 +14,9 @@ public abstract class Festa : IFesta
     public double Preco { get;  set; }
     public List<string> Comidas { get; set; }
     public List<string> Items { get; set; }
-    public List<string> ListaBebidas { get; set; }
     public Dictionary<string, int> Bebidas { get; set; }
+
+	public List<string> ListaBebidas { get; set; }
 
 	public Festa(int numeroDeConvidados, TipoServico tipoServico, Dictionary<string, int> bebidas)
 	{
@@ -74,18 +76,37 @@ public abstract class Festa : IFesta
 
     public override string ToString()
     {
-        // lembrar de mudar
-        string comidasStr = Comidas != null ? string.Join(", ", Comidas) : "Nenhuma";
-        string bebidasStr = Bebidas != null ? string.Join(", ", ListaBebidas) : "Nenhuma";
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine(
+	        $"Id: {Id}, Data: {Data.ToString("yy-MMM-dd ddd")}, Número de convidados: {NumeroDeConvidados}, Id do espaço: {SpaceId}, " +
+	        $"Tipo do serviço:{TipoServico}, Tipo da festa: {RetornarTipo()}, Preço total: {Preco}");
 
-        return $"Evento Id: {Id}\n" +
-               $"Data: {Data}\n" +
-               $"Número de Convidados: {NumeroDeConvidados}\n" +
-               $"Space Id: {SpaceId}\n" +
-               $"Tipo de Serviço: {TipoServico}\n" +
-               $"Tipo de Festa: {RetornarTipo()}\n" +
-               $"Preço: {Preco:C}\n" +
-               $"Comidas: {comidasStr}\n" +
-               $"Bebidas: {bebidasStr}";
-    }
+        sb.AppendLine("Comidas");
+		foreach (string comida in Comidas)
+		{
+			sb.Append(comida);
+			if (comida != Comidas.Last())
+			{
+				sb.Append(",");
+			}
+		}
+
+		sb.AppendLine("Bebidas");
+		foreach (KeyValuePair<string, int> bebida in Bebidas)
+		{
+			sb.AppendLine($"Nome: {bebida.Key} || Quantidade: {bebida.Value}");
+		}
+
+		sb.AppendLine("Itens");
+		foreach (string item in Items)
+		{
+			sb.Append(item);
+			if (item != Items.Last())
+			{
+				sb.Append(",");
+			}
+		}
+
+        return sb.ToString();
+	}
 }

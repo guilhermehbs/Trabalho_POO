@@ -14,7 +14,7 @@ public class CalendarioService
 	public DateTime MarcarData()
 	{
 		DateTime nextDate = DateTime.Now.Date.AddDays(30);
-		while (DataNaoEValida(nextDate.Date) || !IsFridayOrSaturday(nextDate.Date))
+		while (DataNaoEValida(nextDate.Date) || !EhSabadoOuDomingo(nextDate.Date))
 		{
 			nextDate = nextDate.AddDays(1);
 		}
@@ -25,7 +25,7 @@ public class CalendarioService
     
     public DateTime MarcarData(DateTime dataAtual)
     	{
-    		while (DataNaoEValida(dataAtual.Date) || !IsFridayOrSaturday(dataAtual.Date))
+    		while (DataNaoEValida(dataAtual.Date) || !EhSabadoOuDomingo(dataAtual.Date))
     		{
 			    dataAtual = dataAtual.AddDays(1);
     		}
@@ -35,18 +35,17 @@ public class CalendarioService
     	}
 
 
-
 	public bool DataNaoEValida(DateTime date)
 	{
 		return Calendario.Datas.Any(d => d.Date == date.Date);
 	}
 
-	private bool IsFridayOrSaturday(DateTime date)
+	private bool EhSabadoOuDomingo(DateTime date)
 	{
 		return date.DayOfWeek == DayOfWeek.Friday || date.DayOfWeek == DayOfWeek.Saturday;
 	}
 
-	public DateTime lastScheduledDay()
+	public DateTime UltimaDataMarcada()
 	{
 		if (Calendario.Datas.Count == 0) { throw new IndexOutOfRangeException("There are no scheduled dates"); }
 		return Calendario.Datas[Calendario.Datas.Count - 1];
