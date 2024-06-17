@@ -29,4 +29,44 @@ public class ComidaService
             throw new ArgumentException("This type does not exist in our database");
         }
     }
+
+    public static List<string> DefinirListaComidas(Festa festa)
+    {
+
+
+        if (festa.TipoServico.Equals(TipoServico.Premier))
+        {
+            return new List<string>
+            {
+            "Canape",
+            "Tartine",
+            "Bruschetta",
+            "Espetinho caprese"
+            };
+        }
+        else if (festa.TipoServico.Equals(TipoServico.Luxo))
+        {
+            return new List<string>
+        {
+            "Croquete carne seca",
+            "Barquetes legumes",
+            "Empadinha gourmet",
+            "Cestinha bacalhau"
+        };
+        }
+        else if (festa.TipoServico.Equals(TipoServico.Standard))
+        {
+            return new List<string>
+        {
+            "Coxinha",
+            "Kibe",
+            "Empadinha",
+            "Pão de queijo"
+        };
+        }
+        else
+        {
+            throw new ArgumentException("This type does not exist in our database");
+        }
+    }
 }

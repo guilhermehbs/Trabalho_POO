@@ -49,4 +49,15 @@ public class BebidaService
 
         return valorBebidas;
     }
+
+    public static List<string> DefinirListaBebidas(Festa festa)
+	{
+		Dictionary<string, int> dicbebidas = festa.Bebidas;
+		List< string> retorno = new List< string>();
+		foreach(KeyValuePair<string,int> keyValuePair in dicbebidas)
+		{
+			retorno.Add($"{keyValuePair.Key}:{keyValuePair.Value}");
+		}
+		return retorno;
+    }
 }

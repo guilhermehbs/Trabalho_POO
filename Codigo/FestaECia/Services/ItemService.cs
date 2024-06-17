@@ -1,5 +1,6 @@
 using FestaECia.Models;
 using FestaECia.Models.Enums;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FestaECia.Services;
 
@@ -91,5 +92,15 @@ public class ItemService
         }
 
         return itens;
+    }
+    public static List<string> DefinirListaItems(Festa festa)
+    {
+        List<string> retorno = new List<string>();
+        Dictionary<string, double> dic_temp = RetornarDicionarioValores(festa);
+        foreach(string key in dic_temp.Keys)
+        {
+            retorno.Add(key.ToString());
+        }
+        return retorno;
     }
 }

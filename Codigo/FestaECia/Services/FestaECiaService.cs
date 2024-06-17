@@ -18,7 +18,11 @@ public class FestaECiaService
 
 	public void MarcarFesta(Festa festa)
 	{
-		List<Espaco> listaDeEspacosDisponiveis = EspacoService.ListaDeEspacosDisponiveis(festa.NumeroDeConvidados);
+		festa.Comidas = ComidaService.DefinirListaComidas(festa);
+        festa.Items = ItemService.DefinirListaItems(festa);
+        festa.ListaBebidas = BebidaService.DefinirListaBebidas(festa);
+
+        List<Espaco> listaDeEspacosDisponiveis = EspacoService.ListaDeEspacosDisponiveis(festa.NumeroDeConvidados);
 		DateTime data = Calendario.MarcarData();
 		double preco = 0.0;
 		int capacidadeEspaco = 0; 
