@@ -18,43 +18,49 @@ public class FestaECiaService
 
 	public void MarcarFesta(Festa festa)
 	{
-		festa.Comidas = ComidaService.DefinirListaComidas(festa);
-        festa.Items = ItemService.DefinirListaItems(festa);
-        festa.ListaBebidas = BebidaService.DefinirListaBebidas(festa);
-
-        List<Espaco> listaDeEspacosDisponiveis = EspacoService.ListaDeEspacosDisponiveis(festa.NumeroDeConvidados);
-		DateTime data = Calendario.MarcarData();
-		double preco = 0.0;
-		int capacidadeEspaco = 0; 
-		bool marcou = false;
-		while (!marcou)
+		try
 		{
-			foreach (Espaco espaco in listaDeEspacosDisponiveis)
+			festa.Comidas = ComidaService.DefinirListaComidas(festa);
+			festa.Items = ItemService.DefinirListaItems(festa);
+			festa.ListaBebidas = BebidaService.DefinirListaBebidas(festa);
+
+			List<Espaco> listaDeEspacosDisponiveis = EspacoService.ListaDeEspacosDisponiveis(festa.NumeroDeConvidados);
+			DateTime data = Calendario.MarcarData();
+			double preco = 0.0;
+			int capacidadeEspaco = 0;
+			bool marcou = false;
+			while (!marcou)
 			{
-				if (!espaco.DatasMarcadas.Contains(data))
+				foreach (Espaco espaco in listaDeEspacosDisponiveis)
 				{
-					festa.SpaceId = espaco.Id;
-					preco += espaco.Preco;
-					capacidadeEspaco += espaco.Capacidade;
-					festa.Data = data;
-                    EspacoService.MarcarData(data.ToString("dd-MM-yyyy"), festa.SpaceId);
+					if (!espaco.DatasMarcadas.Contains(data))
+					{
+						festa.SpaceId = espaco.Id;
+						preco += espaco.Preco;
+						capacidadeEspaco += espaco.Capacidade;
+						festa.Data = data;
+						EspacoService.MarcarData(data.ToString("dd-MM-yyyy"), festa.SpaceId);
 
-                    marcou = true;
-					break;
+						marcou = true;
+						break;
+					}
 				}
+
+				data = Calendario.MarcarData(data);
 			}
-			data = Calendario.MarcarData(data);
+
+			preco += ComidaService.DefinirValorComidas(festa);
+			preco += ItemService.DefinirValorItens(festa, capacidadeEspaco);
+			preco += BebidaService.DefinirValorBebidas(festa);
+
+			festa.Preco = preco;
+
+			_festaRepository.Inserir(festa);
 		}
-
-		preco += ComidaService.DefinirValorComidas(festa);
-		preco += ItemService.DefinirValorItens(festa, capacidadeEspaco);
-		preco += BebidaService.DefinirValorBebidas(festa);
-
-		festa.Preco = preco;
-
-        _festaRepository.Inserir(festa);
-		
-	
+		catch (Exception ex)
+		{
+			throw new Exception("Erro ao marcar festa " + ex.Message);
+		}
 	}
 
 	public void DeletarFesta(int id)

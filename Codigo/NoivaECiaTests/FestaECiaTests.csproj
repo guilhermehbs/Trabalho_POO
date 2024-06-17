@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Trabalho_POO\FestaECia_antigo.csproj" />
+    <ProjectReference Include="..\FestaECia\FestaECia.csproj" />
   </ItemGroup>
 
 </Project>

@@ -65,11 +65,11 @@ public class FestaRepository : IGet<Festa>, ISet<Festa>
 		}
 		catch (InvalidOperationException ex)
 		{
-			throw new InvalidOperationException("Erro ao acessar um elemento da festa: " + ex.Message);
+			throw new InvalidOperationException("Erro ao acessar um elemento da festa " + ex.Message);
 		}
 		catch (SqlException ex)
 		{
-			throw new Exception("Erro ao fazer a consulta no banco de dados" + ex.Message);
+			throw new Exception("Erro ao fazer a consulta no banco de dados " + ex.Message);
 		}
 		catch (ArgumentException)
 		{
@@ -77,7 +77,7 @@ public class FestaRepository : IGet<Festa>, ISet<Festa>
 		}
 		catch (Exception ex)
 		{
-			throw new Exception("Erro inesperado ao consultar a festa: " + ex.Message);
+			throw new Exception("Erro inesperado ao consultar a festa " + ex.Message);
 		}
 
 		return null;
@@ -108,7 +108,7 @@ public class FestaRepository : IGet<Festa>, ISet<Festa>
 				throw new Exception("Impossível deletar a festa, pois existem eventos associados a ela");
 			}
 
-			throw new Exception("Erro ao inserir a festa" + ex.Message);
+			throw new Exception("Erro ao inserir a festa " + ex.Message);
 		}
 		catch (ArgumentException)
 		{
@@ -116,7 +116,7 @@ public class FestaRepository : IGet<Festa>, ISet<Festa>
 		}
 		catch (Exception ex)
 		{
-			throw new Exception("Erro ao inserir festa no banco de dados" + ex.Message);
+			throw new Exception("Erro ao inserir festa no banco de dados " + ex.Message);
 		}
 	}
 
@@ -146,7 +146,7 @@ public class FestaRepository : IGet<Festa>, ISet<Festa>
 			}
 			else
 			{
-				throw new Exception("Erro ao deletar a festa" + ex.Message);
+				throw new Exception("Erro ao deletar a festa " + ex.Message);
 			}
 		}
 		catch (ArgumentException)
@@ -155,7 +155,7 @@ public class FestaRepository : IGet<Festa>, ISet<Festa>
 		}
 		catch (Exception ex)
 		{
-			throw new Exception("Erro ao deletar a festa" + ex.Message);
+			throw new Exception("Erro ao deletar a festa " + ex.Message);
 		}
 	}
 

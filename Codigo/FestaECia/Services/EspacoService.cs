@@ -14,16 +14,22 @@ public class EspacoService
 
 	public EspacoService()
 	{
-		
 	}
 
 	public List<Espaco> ListaDeEspacosDisponiveis(int quantidadeDePessoas)
 	{
-		List<Espaco> spaceList = ListarTodosEspacos();
-		spaceList = spaceList.Where(espaco => espaco.Capacidade >= quantidadeDePessoas).ToList();
-		spaceList = spaceList.OrderBy(espaco => espaco.Capacidade).ToList();
+		try
+		{
+			List<Espaco> spaceList = ListarTodosEspacos();
+			spaceList = spaceList.Where(espaco => espaco.Capacidade >= quantidadeDePessoas).ToList();
+			spaceList = spaceList.OrderBy(espaco => espaco.Capacidade).ToList();
 
-		return spaceList;
+			return spaceList;
+		}
+		catch (Exception ex)
+		{
+			throw new Exception("Erro ao criar lista de espaços " + ex.Message);
+		}
 	}
 
 	public List<Espaco> ListarTodosEspacos()
