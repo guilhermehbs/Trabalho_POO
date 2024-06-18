@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace FestaECia.Repository;
 
-public class EspacoRepository : IGet<Espaco>, IEspacoRepository
+public class EspacoRepository : IEspacoRepository
 {
 	private readonly Database _database;
 
@@ -67,9 +67,9 @@ public class EspacoRepository : IGet<Espaco>, IEspacoRepository
 		{
 			throw new Exception("Erro ao buscar no banco de dados " + ex.Message);
 		}
-		catch (ArgumentException)
+		catch (FormatException)
 		{
-			throw new ArgumentException("Número informado não é inteiro");
+			throw new FormatException("Tipo informado não é número inteiro");
 		}
 		catch (Exception ex)
 		{
@@ -157,9 +157,9 @@ public class EspacoRepository : IGet<Espaco>, IEspacoRepository
 	    {
 		    throw new Exception("Erro ao buscar no banco de dados " + ex.Message);
 	    }
-	    catch (ArgumentException)
+	    catch (FormatException)
 	    {
-		    throw new ArgumentException("Número informado não é inteiro");
+		    throw new FormatException("Tipo informado não é número inteiro");
 	    }
 		catch (Exception ex)
 	    {
@@ -197,9 +197,9 @@ public class EspacoRepository : IGet<Espaco>, IEspacoRepository
 
             throw new Exception("Erro ao inserir a festa " + ex.Message);
         }
-        catch (ArgumentException ex)
+        catch (FormatException ex)
         {
-            throw new ArgumentException("Tipo informado está errado " + ex.Message);
+            throw new FormatException("Tipo informado está errado " + ex.Message);
         }
         catch (Exception ex)
         {

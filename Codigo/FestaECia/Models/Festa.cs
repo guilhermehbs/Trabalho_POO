@@ -76,11 +76,12 @@ public abstract class Festa
     public override string ToString()
     {
         StringBuilder sb = new StringBuilder();
-        sb.AppendLine(
+		sb.AppendLine("------------------------------------------------------------------------------------------------------------------------");
+		sb.AppendLine(
 	        $"Id: {Id}, Data: {Data.ToString("yy-MMM-dd ddd")}, Número de convidados: {NumeroDeConvidados}, Id do espaço: {SpaceId}, " +
 	        $"Tipo do serviço:{TipoServico}, Tipo da festa: {RetornarTipo()}, Preço total: {Preco}");
 
-        sb.AppendLine("Comidas");
+        sb.AppendLine("Comidas:");
 		foreach (string comida in Comidas)
 		{
 			sb.Append(comida);
@@ -90,13 +91,17 @@ public abstract class Festa
 			}
 		}
 
-		sb.AppendLine("Bebidas");
+		sb.AppendLine();
+
+		sb.AppendLine("Bebidas:");
 		foreach (KeyValuePair<string, int> bebida in Bebidas)
 		{
 			sb.AppendLine($"Nome: {bebida.Key} || Quantidade: {bebida.Value}");
 		}
 
-		sb.AppendLine("Itens");
+		sb.AppendLine();
+
+		sb.AppendLine("Itens:");
 		foreach (string item in Items)
 		{
 			sb.Append(item);
@@ -106,6 +111,9 @@ public abstract class Festa
 			}
 		}
 
-        return sb.ToString();
+		sb.AppendLine();
+		sb.AppendLine("------------------------------------------------------------------------------------------------------------------------");
+
+		return sb.ToString();
 	}
 }

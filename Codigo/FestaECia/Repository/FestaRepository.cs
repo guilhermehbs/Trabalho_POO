@@ -5,7 +5,7 @@ using System;
 using FestaECia.Repository.Interfaces;
 namespace FestaECia.Repository;
 
-public class FestaRepository : IGet<Festa>, IManipulavel<Festa>, IFestaRepository
+public class FestaRepository : IFestaRepository
 {
 	private readonly Database _database;
 
@@ -46,44 +46,6 @@ public class FestaRepository : IGet<Festa>, IManipulavel<Festa>, IFestaRepositor
 		}
 	}
 
-	public Festa PegarPorId(int id)
-	{
-		try
-		{
-			using (var conexao = _database.Conectar())
-			{
-				conexao.Open();
-				var comando = new SqlCommand($"SELECT * FROM tb_space WHERE Id = {id}", conexao);
-
-				using (var leitor = comando.ExecuteReader())
-				{
-					if (leitor.Read())
-					{
-						return CriarFesta(leitor);
-					}
-				}
-			}
-		}
-		catch (InvalidOperationException ex)
-		{
-			throw new InvalidOperationException("Erro ao acessar um elemento da festa " + ex.Message);
-		}
-		catch (SqlException ex)
-		{
-			throw new Exception("Erro ao fazer a consulta no banco de dados " + ex.Message);
-		}
-		catch (ArgumentException)
-		{
-			throw new ArgumentException("Número de id informado não é inteiro");
-		}
-		catch (Exception ex)
-		{
-			throw new Exception("Erro inesperado ao consultar a festa " + ex.Message);
-		}
-
-		return null;
-	}
-
 	public void Inserir(Festa festa)
 	{
 		try
@@ -111,9 +73,9 @@ public class FestaRepository : IGet<Festa>, IManipulavel<Festa>, IFestaRepositor
 
 			throw new Exception("Erro ao inserir a festa " + ex.Message);
 		}
-		catch (ArgumentException)
+		catch (FormatException)
 		{
-			throw new ArgumentException("Tipo informado não é uma festa");
+			throw new FormatException("Tipo informado não é uma festa");
 		}
 		catch (Exception ex)
 		{
@@ -150,9 +112,9 @@ public class FestaRepository : IGet<Festa>, IManipulavel<Festa>, IFestaRepositor
 				throw new Exception("Erro ao deletar a festa " + ex.Message);
 			}
 		}
-		catch (ArgumentException)
+		catch (FormatException)
 		{
-			throw new ArgumentException("Número de id informado não é inteiro");
+			throw new FormatException("Id informado não existe");
 		}
 		catch (Exception ex)
 		{

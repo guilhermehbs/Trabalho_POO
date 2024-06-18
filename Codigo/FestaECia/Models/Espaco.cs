@@ -21,6 +21,10 @@ namespace FestaECia.Models
 			DatasMarcadas = datasMarcadas;
 		}
 
+		public Espaco()
+		{
+		}
+
 		public override string ToString()
 		{
 			StringBuilder sb = new StringBuilder();

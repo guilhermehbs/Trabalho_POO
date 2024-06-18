@@ -76,8 +76,4 @@ public class FestaECiaService : IFestaService
 		return _festaRepository.ListarTodos();
 	}
 
-	public Festa PegarFestaPorId(int id)
-	{
-		return _festaRepository.PegarPorId(id);
-	}
 }
