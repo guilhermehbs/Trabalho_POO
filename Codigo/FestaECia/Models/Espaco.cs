@@ -6,9 +6,10 @@ namespace FestaECia.Models
 	public class Espaco
 	{
 		public int Id { get; }
-		public string Nome { get; private set; }
-		public int Capacidade { get; private set; }
+		public string Nome { get; }
+		public int Capacidade { get; }
 		public double Preco { get; private set; }
+
 		public List<DateTime> DatasMarcadas;
 
 		public Espaco(int id, string nome, int capacidade, List<DateTime> datasMarcadas, double preco)
@@ -18,11 +19,6 @@ namespace FestaECia.Models
 			Capacidade = capacidade;
 			Preco = preco;
 			DatasMarcadas = datasMarcadas;
-		}
-
-		public void MarcarData(DateTime data)
-		{
-			DatasMarcadas.Add(data);
 		}
 
 		public override string ToString()

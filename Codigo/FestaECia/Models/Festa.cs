@@ -5,17 +5,15 @@ namespace FestaECia.Models;
 
 public abstract class Festa
 {
-    public int Id { get; set; }
+    public int Id { get; private set; }
     public DateTime Data { get; set; }
-    public int NumeroDeConvidados { get;  set; }
-    public int SpaceId { get;  set; }
+    public int NumeroDeConvidados { get; private set; }
+    public int SpaceId { get; set; }
     public TipoServico TipoServico { get;  set; }
-    public TipoFesta TipoFesta { get;  set; }
     public double Preco { get;  set; }
     public List<string> Comidas { get; set; }
     public List<string> Items { get; set; }
     public Dictionary<string, int> Bebidas { get; set; }
-
 	public List<string> ListaBebidas { get; set; }
 
 	public Festa(int numeroDeConvidados, TipoServico tipoServico, Dictionary<string, int> bebidas)
@@ -27,7 +25,8 @@ public abstract class Festa
 	}
 
     //construtor usado pelo banco
-	public Festa(int id, DateTime data, int numeroDeConvidados, int spaceId, TipoServico tipoServico, double preco, List<string> listaComidas, List<string> itens, List<string> bebidas)
+	public Festa(int id, DateTime data, int numeroDeConvidados, int spaceId, TipoServico tipoServico, 
+		double preco, List<string> listaComidas, List<string> itens, List<string> bebidas)
     {
         Id = id;
         Data = data;
