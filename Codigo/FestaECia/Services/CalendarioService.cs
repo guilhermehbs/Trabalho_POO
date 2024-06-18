@@ -1,8 +1,9 @@
 ﻿using FestaECia.Models;
+using FestaECia.Services.Interfaces;
 
 namespace FestaECia.Services;
 
-public class CalendarioService
+public class CalendarioService : ICalendarioService
 {
 	public Calendario Calendario;
 

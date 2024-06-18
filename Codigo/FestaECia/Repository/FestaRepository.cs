@@ -2,9 +2,10 @@
 using FestaECia.Models;
 using FestaECia.Models.Enums;
 using System;
+using FestaECia.Repository.Interfaces;
 namespace FestaECia.Repository;
 
-public class FestaRepository : IGet<Festa>, ISet<Festa>
+public class FestaRepository : IGet<Festa>, IManipulavel<Festa>, IFestaRepository
 {
 	private readonly Database _database;
 

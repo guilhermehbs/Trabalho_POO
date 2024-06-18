@@ -3,7 +3,7 @@ using FestaECia.Models.Enums;
 
 namespace FestaECia.Services;
 
-public class ComidaService
+public class ComidaService : IComidaService
 {
     public static double DefinirValorComidas(Festa festa)
     {

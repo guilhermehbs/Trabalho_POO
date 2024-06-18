@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FestaECia.Services;
 
-public class ItemService
+public class ItemService : IItemService
 {
     public static double DefinirValorItens(Festa festa, int capacidade)
     {

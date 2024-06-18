@@ -3,11 +3,11 @@ using FestaECia.Repository;
 
 namespace FestaECia.Services;
 
-public class EspacoService
+public class EspacoService : IEspacoService
 {
-	private readonly EspacoRepository _espacoRepository;
+	private readonly IEspacoRepository _espacoRepository;
 
-	public EspacoService(EspacoRepository espacoRepository)
+	public EspacoService(IEspacoRepository espacoRepository)
 	{
 		_espacoRepository = espacoRepository;
 	}

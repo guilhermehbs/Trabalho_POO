@@ -1,19 +1,22 @@
 ﻿using FestaECia.Models;
 using FestaECia.Repository;
+using FestaECia.Repository.Interfaces;
+using FestaECia.Services.Interfaces;
 
 namespace FestaECia.Services;
 
-public class FestaECiaService
+public class FestaECiaService : IFestaService
 {
-	private readonly FestaRepository _festaRepository;
-	public CalendarioService Calendario;
-	public EspacoService EspacoService;
+	public ICalendarioService _calendario;
+	private readonly IFestaRepository _festaRepository;
+	public IEspacoService _espacoService;
 
-	public FestaECiaService(FestaRepository festaRepository)
+	public FestaECiaService(IFestaRepository festaRepository, IEspacoService espacoService, ICalendarioService calendarioService)
 	{
+		_calendario = calendarioService;
+		_espacoService = new EspacoService(new EspacoRepository());
 		_festaRepository = festaRepository;
-		Calendario = new CalendarioService();
-		EspacoService = new EspacoService(new EspacoRepository());
+		_espacoService = espacoService;
 	}
 
 	public void MarcarFesta(Festa festa)
@@ -24,8 +27,8 @@ public class FestaECiaService
 			festa.Items = ItemService.DefinirListaItems(festa);
 			festa.ListaBebidas = BebidaService.DefinirListaBebidas(festa);
 
-			List<Espaco> listaDeEspacosDisponiveis = EspacoService.ListaDeEspacosDisponiveis(festa.NumeroDeConvidados);
-			DateTime data = Calendario.MarcarData();
+			List<Espaco> listaDeEspacosDisponiveis = _espacoService.ListaDeEspacosDisponiveis(festa.NumeroDeConvidados);
+			DateTime data = _calendario.MarcarData();
 			double preco = 0.0;
 			int capacidadeEspaco = 0;
 			bool marcou = false;
@@ -39,14 +42,14 @@ public class FestaECiaService
 						preco += espaco.Preco;
 						capacidadeEspaco += espaco.Capacidade;
 						festa.Data = data;
-						EspacoService.MarcarData(data.ToString("dd-MM-yyyy"), festa.SpaceId);
+						_espacoService.MarcarData(data.ToString("dd-MM-yyyy"), festa.SpaceId);
 
 						marcou = true;
 						break;
 					}
 				}
 
-				data = Calendario.MarcarData(data);
+				data = _calendario.MarcarData(data);
 			}
 
 			preco += ComidaService.DefinirValorComidas(festa);

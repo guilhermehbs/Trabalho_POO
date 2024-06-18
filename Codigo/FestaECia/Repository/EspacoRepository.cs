@@ -1,9 +1,10 @@
 using FestaECia.Models;
+using FestaECia.Repository.Interfaces;
 using System.Data.SqlClient;
 
 namespace FestaECia.Repository;
 
-public class EspacoRepository : IGet<Espaco>
+public class EspacoRepository : IGet<Espaco>, IEspacoRepository
 {
 	private readonly Database _database;
 

@@ -1,7 +1,9 @@
 ﻿using FestaECia.Models;
 using FestaECia.Models.Enums;
 using FestaECia.Repository;
+using FestaECia.Repository.Interfaces;
 using FestaECia.Services;
+using FestaECia.Services.Interfaces;
 
 namespace FestaECia;
 
@@ -9,8 +11,11 @@ class Program
 {
 	static void Main(string[] args)
 	{
-		FestaRepository festaRepository = new FestaRepository();
-		FestaECiaService festaService = new FestaECiaService(festaRepository);
+		IFestaRepository festaRepository = new FestaRepository();
+		IEspacoRepository espacoRepository = new EspacoRepository();
+		IEspacoService espacoService = new EspacoService(espacoRepository);
+		ICalendarioService calendarioService = new CalendarioService();
+		IFestaService festaService = new FestaECiaService(festaRepository, espacoService, calendarioService);
 
 		int escolha = 0;
 
@@ -52,7 +57,7 @@ class Program
 	}
 
 
-	static void MostrarTodasAsFestas(FestaECiaService festaService)
+	static void MostrarTodasAsFestas(IFestaService festaService)
 	{
 		try
 		{
@@ -72,7 +77,7 @@ class Program
 		}
 	}
 
-	static void MostrarFestaPorId(FestaECiaService festaService)
+	static void MostrarFestaPorId(IFestaService festaService)
 	{
 		try
 		{
@@ -91,7 +96,7 @@ class Program
 		}
 	}
 
-	static void AdicionarNovaFesta(FestaECiaService festaService)
+	static void AdicionarNovaFesta(IFestaService festaService)
 	{
 		try
 		{
@@ -120,7 +125,7 @@ class Program
 		}
 	}
 
-	static void DeletarFesta(FestaECiaService festaService)
+	static void DeletarFesta(IFestaService festaService)
 	{
 		try
 		{

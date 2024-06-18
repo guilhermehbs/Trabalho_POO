@@ -3,7 +3,7 @@ using FestaECia.Models.Enums;
 
 namespace FestaECia.Models;
 
-public abstract class Festa : IFesta
+public abstract class Festa
 {
     public int Id { get; set; }
     public DateTime Data { get; set; }
