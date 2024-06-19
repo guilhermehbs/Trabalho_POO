@@ -56,12 +56,15 @@ class Program
 
 	static void MostrarTodasAsFestas(IFestaService festaService)
 	{
-		Console.Clear();
-		try
-		{
-			var festas = festaService.ListarTodasFestas();
+        Console.Clear();
 
-			if (festas.Count > 0)
+        Console.WriteLine("Carregando...");
+
+        try
+        {
+			var festas = festaService.ListarTodasFestas();
+            Console.Clear();
+            if (festas.Count > 0)
 			{
 				foreach (var festa in festas)
 				{
@@ -91,10 +94,18 @@ class Program
 		Console.Clear();
 		try
 		{
-			Console.Write("Digite o número de convidados: ");
-			int numeroConvidados = int.Parse(Console.ReadLine());
+			int numeroConvidados;
 
-			TipoServico tipoServico = RetornarTipoServico();
+			do
+			{
+                Console.Write("Digite o número de convidados: ");
+
+                numeroConvidados = int.Parse(Console.ReadLine());
+
+			} while (numeroConvidados > 500 || numeroConvidados < 1);
+
+
+            TipoServico tipoServico = RetornarTipoServico();
 
 			Dictionary<string, int> bebidas = RetornarDicionarioDeBebidas(tipoServico);
 
@@ -104,7 +115,11 @@ class Program
 				festa = RetornarTipoDaFesta(numeroConvidados, tipoServico, bebidas);
 			}
 
+
+			Console.WriteLine("Marcando...");
+
 			festaService.MarcarFesta(festa);
+			
 			Console.WriteLine("Festa cadastrada com sucesso");
 			Console.WriteLine("Valor Total da festa: " + festa.Preco);
 			Thread.Sleep(4000);
@@ -126,14 +141,20 @@ class Program
 		{
 			Console.WriteLine("Festas cadastradas:");
 			MostrarTodasAsFestas(festaService);
-			Console.Write("Digite o id da festa para deletar: ");
+			Console.Write("Digite o id da festa para deletar (0 para cancelar): ");
 			int id = int.Parse(Console.ReadLine());
-
-			festaService.DeletarFesta(id);
-			Console.WriteLine("Festa deletada com sucesso");
-			Thread.Sleep(4000);
-		}
-		catch (ArgumentException ex)
+			if(0 == id)
+			{
+                Console.WriteLine("Cancelado, Tamo junto!");
+            }
+			else
+			{
+                festaService.DeletarFesta(id);
+                Console.WriteLine("Festa deletada com sucesso");
+            }
+                Thread.Sleep(4000);
+        }
+        catch (ArgumentException ex)
 		{
 			throw new ArgumentException("Tipo digitado não é suportado " + ex.Message);
 		}
@@ -171,9 +192,9 @@ class Program
 					return null;
 			}
 		}
-		catch (ArgumentException ex)
+		catch (FormatException ex)
 		{
-			throw new ArgumentException("Tipo digitado não é suportado " + ex.Message);
+			throw new FormatException("Tipo digitado não é suportado " + ex.Message);
 		}
 		catch (Exception ex)
 		{
@@ -212,7 +233,7 @@ class Program
 
 			return tipoServico;
 		}
-		catch (ArgumentException ex)
+		catch (FormatException ex)
 		{
 			throw new ArgumentException("Tipo digitado não é suportado " + ex.Message);
 		}
@@ -229,15 +250,15 @@ class Program
 			Dictionary<string, int> bebidas = new Dictionary<string, int>();
 			if (tipoServico == TipoServico.Standard)
 			{
-				Console.Write("Digite a quantidade de água: ");
+				Console.Write("Digite a quantidade garrafas de água: ");
 				int quantidadeAgua = int.Parse(Console.ReadLine());
-				Console.Write("Digite a quantidade de suco: ");
+				Console.Write("Digite a quantidade jarras de suco: ");
 				int quantidadeSuco = int.Parse(Console.ReadLine());
-				Console.Write("Digite a quantidade de refrigerante: ");
+				Console.Write("Digite a quantidade latas de refrigerante: ");
 				int quantidadeRefrigerante = int.Parse(Console.ReadLine());
-				Console.Write("Digite a quantidade de cerveja comum: ");
+				Console.Write("Digite a quantidade de cervejas comum: ");
 				int quantidadeCervejaComum = int.Parse(Console.ReadLine());
-				Console.Write("Digite a quantidade de espumante nacional: ");
+				Console.Write("Digite a quantidade de espumantes nacional: ");
 				int quantidadeEspumanteNacional = int.Parse(Console.ReadLine());
 				bebidas["agua sem gas"] = quantidadeAgua;
 				bebidas["suco"] = quantidadeSuco;
@@ -248,19 +269,19 @@ class Program
 			}
 			else
 			{
-				Console.Write("Digite a quantidade de água: ");
+				Console.Write("Digite a quantidade garrafas de água: ");
 				int quantidadeAgua = int.Parse(Console.ReadLine());
-				Console.Write("Digite a quantidade de suco: ");
+				Console.Write("Digite a quantidade jarras de suco: ");
 				int quantidadeSuco = int.Parse(Console.ReadLine());
-				Console.Write	("Digite a quantidade de refrigerante: ");
+				Console.Write	("Digite a quantidade latas de refrigerante: ");
 				int quantidadeRefrigerante = int.Parse(Console.ReadLine());
-				Console.Write("Digite a quantidade de cerveja comum: ");
+				Console.Write("Digite a quantidade de cervejas comum: ");
 				int quantidadeCervejaComum = int.Parse(Console.ReadLine());
-				Console.Write("Digite a quantidade de cerveja artesanal: ");
+				Console.Write("Digite a quantidade de cervejas artesanal: ");
 				int quantidadeCervejaArtesanal = int.Parse(Console.ReadLine());
-				Console.Write("Digite a quantidade de espumante nacional: ");
+				Console.Write("Digite a quantidade de espumantes nacional: ");
 				int quantidadeEspumanteNacional = int.Parse(Console.ReadLine());
-				Console.Write("Digite a quantidade de espumante importado: ");
+				Console.Write("Digite a quantidade de espumantes importado: ");
 				int quantidadeEspumanteImportado = int.Parse(Console.ReadLine());
 				bebidas["agua sem gas"] = quantidadeAgua;
 				bebidas["suco"] = quantidadeSuco;
@@ -273,9 +294,9 @@ class Program
 
 			return bebidas;
 		}
-		catch (ArgumentException ex)
+		catch (FormatException ex)
 		{
-			throw new ArgumentException("Tipo digitado não é suportado " + ex.Message);
+			throw new FormatException("Tipo digitado não é suportado " + ex.Message);
 		}
 		catch (Exception ex)
 		{

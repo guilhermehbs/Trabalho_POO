@@ -37,7 +37,6 @@ public abstract class Festa
         Comidas = listaComidas;
         Items = itens;
         ListaBebidas = bebidas;
-        Bebidas = new Dictionary<string, int>();
     }
 
     public abstract string RetornarTipo();
@@ -94,12 +93,15 @@ public abstract class Festa
 		sb.AppendLine();
 
 		sb.AppendLine("Bebidas:");
-		foreach (KeyValuePair<string, int> bebida in Bebidas)
-		{
-			sb.AppendLine($"Nome: {bebida.Key} || Quantidade: {bebida.Value}");
-		}
-
-		sb.AppendLine();
+        foreach (string bebida in ListaBebidas)
+        {
+            sb.Append(bebida);
+            if (bebida != ListaBebidas.Last())
+            {
+                sb.Append(",");
+            }
+        }
+        sb.AppendLine();
 
 		sb.AppendLine("Itens:");
 		foreach (string item in Items)
