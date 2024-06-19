@@ -10,7 +10,7 @@ public class Database
 		_connectionString = "Server = trabalhopoo2024.database.windows.net; Database = FestaECia; Uid = AzureSA; Pwd = Trabalhopoo2024";
 	}
 
-	public SqlConnection GetConnection()
+	public SqlConnection Conectar()
 	{
 		return new SqlConnection(_connectionString);
 	}

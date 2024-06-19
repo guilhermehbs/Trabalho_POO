@@ -1,55 +1,79 @@
 ﻿using FestaECia.Models;
 using FestaECia.Repository;
+using FestaECia.Repository.Interfaces;
+using FestaECia.Services.Interfaces;
 
 namespace FestaECia.Services;
 
-public class FestaECiaService
+public class FestaECiaService : IFestaService
 {
-	private readonly PartyRepository _partyRepository;
-	public CalendaryService calendary;
-	public SpaceService spaceService;
+	public ICalendarioService _calendario;
+	private readonly IFestaRepository _festaRepository;
+	public IEspacoService _espacoService;
 
-	public FestaECiaService(PartyRepository partyRepository)
+	public FestaECiaService(IFestaRepository festaRepository, IEspacoService espacoService, ICalendarioService calendarioService)
 	{
-		_partyRepository = partyRepository;
-		calendary = new CalendaryService();
-		spaceService = new SpaceService(new SpaceRepository());
+		_calendario = calendarioService;
+		_espacoService = new EspacoService(new EspacoRepository());
+		_festaRepository = festaRepository;
+		_espacoService = espacoService;
 	}
 
-	public void ScheduleParty(Party party)
+	public void MarcarFesta(Festa festa)
 	{
-		DateTime date = calendary.ScheduleDate();
-		List<Space> spacesAvailabe = spaceService.QuantityAvailabeSpaceList(party.NumberOfGuests);
-		foreach (Space space in spacesAvailabe)
+		try
 		{
-			if (!space.DatasMarcadas.Contains(date))
+			festa.Comidas = ComidaService.DefinirListaComidas(festa);
+			festa.Items = ItemService.DefinirListaItems(festa);
+			festa.ListaBebidas = BebidaService.DefinirListaBebidas(festa);
+
+			List<Espaco> listaDeEspacosDisponiveis = _espacoService.ListaDeEspacosDisponiveis(festa.NumeroDeConvidados);
+			DateTime data = _calendario.MarcarData();
+			double preco = 0.0;
+			int capacidadeEspaco = 0;
+			bool marcou = false;
+			while (!marcou)
 			{
-				Console.WriteLine("Marcado no espaço " + space.Name);
-				Console.WriteLine("Marcado na data " + date);
-				break;
+				foreach (Espaco espaco in listaDeEspacosDisponiveis)
+				{
+					if (!espaco.DatasMarcadas.Contains(data))
+					{
+						festa.SpaceId = espaco.Id;
+						preco += espaco.Preco;
+						capacidadeEspaco += espaco.Capacidade;
+						festa.Data = data;
+						_espacoService.MarcarData(data.ToString("dd-MM-yyyy"), festa.SpaceId);
+
+						marcou = true;
+						break;
+					}
+				}
+
+				data = _calendario.MarcarData(data);
 			}
+
+			preco += ComidaService.DefinirValorComidas(festa);
+			preco += ItemService.DefinirValorItens(festa, capacidadeEspaco);
+			preco += BebidaService.DefinirValorBebidas(festa);
+
+			festa.Preco = preco;
+
+			_festaRepository.Inserir(festa);
 		}
-
-		//_partyRepository.Insert(party);
+		catch (Exception ex)
+		{
+			throw new Exception("Erro ao marcar festa " + ex.Message);
+		}
 	}
 
-	public void UpdateParty(Party party)
+	public void DeletarFesta(int id)
 	{
-		_partyRepository.Update(party);
+		_festaRepository.Deletar(id);
 	}
 
-	public void DeleteParty(int id)
+	public List<Festa> ListarTodasFestas()
 	{
-		_partyRepository.Delete(id);
+		return _festaRepository.ListarTodos();
 	}
 
-	public List<Party> ListAllParties()
-	{
-		return _partyRepository.GetAll();
-	}
-
-	public Party GetPartyById(int id)
-	{
-		return _partyRepository.GetById(id);
-	}
 }
