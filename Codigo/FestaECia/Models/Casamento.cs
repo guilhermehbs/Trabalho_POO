@@ -4,6 +4,7 @@ namespace FestaECia.Models;
 
 public class Casamento : Festa
 {
+    public Casamento(){}
 	public Casamento(int numeroDeConvidados, TipoServico tipoServico, Dictionary<string, int> bebidas) :
 		base(numeroDeConvidados, tipoServico, bebidas)
 	{

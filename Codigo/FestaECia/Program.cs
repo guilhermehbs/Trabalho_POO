@@ -94,27 +94,26 @@ class Program
 		Console.Clear();
 		try
 		{
+			Festa festa = null;
+			while (festa == null)
+			{
+				festa = RetornarTipoDaFesta();
+			}
+
 			int numeroConvidados;
 
 			do
 			{
-                Console.Write("Digite o número de convidados: ");
+				Console.Write("Digite o número de convidados: ");
 
-                numeroConvidados = int.Parse(Console.ReadLine());
+				numeroConvidados = int.Parse(Console.ReadLine());
 
 			} while (numeroConvidados > 500 || numeroConvidados < 1);
 
+			TipoServico tipoServico = RetornarTipoServico();
 
-            TipoServico tipoServico = RetornarTipoServico();
-
-			Dictionary<string, int> bebidas = RetornarDicionarioDeBebidas(tipoServico);
-
-			Festa festa = null;
-			while (festa == null)
-			{
-				festa = RetornarTipoDaFesta(numeroConvidados, tipoServico, bebidas);
-			}
-
+			Dictionary<string, int> bebidas = RetornarDicionarioDeBebidas(festa, tipoServico);
+			SalvarFesta(festa, numeroConvidados, tipoServico, bebidas);
 
 			Console.WriteLine("Marcando...");
 
@@ -164,8 +163,7 @@ class Program
 		}
 	}
 
-	static Festa RetornarTipoDaFesta(int numeroConvidados, TipoServico tipoServico,
-		Dictionary<string, int> bebidas)
+	static Festa RetornarTipoDaFesta()
 	{
 		try
 		{
@@ -179,15 +177,15 @@ class Program
 			switch (escolha)
 			{
 				case 1:
-					return new FestaDeAniversario(numeroConvidados, tipoServico, bebidas);
+					return new FestaDeAniversario();
 				case 2:
-					return new Casamento(numeroConvidados, tipoServico, bebidas);
+					return new Casamento();
 				case 3:
-					return new FestaDeFormatura(numeroConvidados, tipoServico, bebidas);
+					return new FestaDeFormatura();
 				case 4:
-					return new FestaDaEmpresa(numeroConvidados, tipoServico, bebidas);
+					return new FestaDaEmpresa();
 				case 5:
-					return new FestaLivre(numeroConvidados, tipoServico, bebidas);
+					return new FestaLivre();
 				default:
 					return null;
 			}
@@ -201,6 +199,21 @@ class Program
 			throw new Exception("Erro ao retornar tipo da festa " + ex.Message);
 		}
 
+	}
+
+	static void SalvarFesta(Festa festa, int numeroConvidados, TipoServico tipoServico,
+		Dictionary<string, int> bebidas)
+	{
+		try
+		{
+			festa.NumeroDeConvidados = numeroConvidados;
+			festa.TipoServico = tipoServico;
+			festa.Bebidas = bebidas;
+		}
+		catch (Exception ex)
+		{
+			throw new Exception("Erro ao salvar festa" + ex.Message);
+		}
 	}
 
 	static TipoServico RetornarTipoServico()
@@ -243,37 +256,18 @@ class Program
 		}
 	}
 
-	static Dictionary<string, int> RetornarDicionarioDeBebidas(TipoServico tipoServico)
+	static Dictionary<string, int> RetornarDicionarioDeBebidas(Festa festa, TipoServico tipoServico)
 	{
 		try
 		{
 			Dictionary<string, int> bebidas = new Dictionary<string, int>();
-			if (tipoServico == TipoServico.Standard)
+			if (festa is Casamento && (tipoServico == TipoServico.Luxo || tipoServico == TipoServico.Premier))
 			{
 				Console.Write("Digite a quantidade garrafas de água: ");
 				int quantidadeAgua = int.Parse(Console.ReadLine());
 				Console.Write("Digite a quantidade jarras de suco: ");
 				int quantidadeSuco = int.Parse(Console.ReadLine());
 				Console.Write("Digite a quantidade latas de refrigerante: ");
-				int quantidadeRefrigerante = int.Parse(Console.ReadLine());
-				Console.Write("Digite a quantidade de cervejas comum: ");
-				int quantidadeCervejaComum = int.Parse(Console.ReadLine());
-				Console.Write("Digite a quantidade de espumantes nacional: ");
-				int quantidadeEspumanteNacional = int.Parse(Console.ReadLine());
-				bebidas["agua sem gas"] = quantidadeAgua;
-				bebidas["suco"] = quantidadeSuco;
-				bebidas["refrigerante"] = quantidadeRefrigerante;
-				bebidas["cerveja comum"] = quantidadeCervejaComum;
-				bebidas["espumante nacional"] = quantidadeEspumanteNacional;
-
-			}
-			else
-			{
-				Console.Write("Digite a quantidade garrafas de água: ");
-				int quantidadeAgua = int.Parse(Console.ReadLine());
-				Console.Write("Digite a quantidade jarras de suco: ");
-				int quantidadeSuco = int.Parse(Console.ReadLine());
-				Console.Write	("Digite a quantidade latas de refrigerante: ");
 				int quantidadeRefrigerante = int.Parse(Console.ReadLine());
 				Console.Write("Digite a quantidade de cervejas comum: ");
 				int quantidadeCervejaComum = int.Parse(Console.ReadLine());
@@ -290,6 +284,25 @@ class Program
 				bebidas["cerveja artesanal"] = quantidadeCervejaArtesanal;
 				bebidas["espumante nacional"] = quantidadeEspumanteNacional;
 				bebidas["espumante importado"] = quantidadeEspumanteImportado;
+
+			}
+			else
+			{
+				Console.Write("Digite a quantidade garrafas de água: ");
+				int quantidadeAgua = int.Parse(Console.ReadLine());
+				Console.Write("Digite a quantidade jarras de suco: ");
+				int quantidadeSuco = int.Parse(Console.ReadLine());
+				Console.Write("Digite a quantidade latas de refrigerante: ");
+				int quantidadeRefrigerante = int.Parse(Console.ReadLine());
+				Console.Write("Digite a quantidade de cervejas comum: ");
+				int quantidadeCervejaComum = int.Parse(Console.ReadLine());
+				Console.Write("Digite a quantidade de espumantes nacional: ");
+				int quantidadeEspumanteNacional = int.Parse(Console.ReadLine());
+				bebidas["agua sem gas"] = quantidadeAgua;
+				bebidas["suco"] = quantidadeSuco;
+				bebidas["refrigerante"] = quantidadeRefrigerante;
+				bebidas["cerveja comum"] = quantidadeCervejaComum;
+				bebidas["espumante nacional"] = quantidadeEspumanteNacional;
 			}
 
 			return bebidas;

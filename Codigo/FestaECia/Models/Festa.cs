@@ -7,7 +7,7 @@ public abstract class Festa
 {
     public int Id { get; private set; }
     public DateTime Data { get; set; }
-    public int NumeroDeConvidados { get; private set; }
+    public int NumeroDeConvidados { get; set; }
     public int SpaceId { get; set; }
     public TipoServico TipoServico { get;  set; }
     public double Preco { get;  set; }
@@ -15,6 +15,8 @@ public abstract class Festa
     public List<string> Items { get; set; }
     public Dictionary<string, int> Bebidas { get; set; }
 	public List<string> ListaBebidas { get; set; }
+
+    public Festa(){}
 
 	public Festa(int numeroDeConvidados, TipoServico tipoServico, Dictionary<string, int> bebidas)
 	{
