@@ -32,7 +32,7 @@ public class BebidaService : IBebidaService
 	    {
 		    Dictionary<string, double> valorBebidas;
 
-		    if (festa.TipoServico == TipoServico.Luxo || festa.TipoServico == TipoServico.Premier)
+		    if (festa.TipoServico == TipoServico.Luxo || festa.TipoServico == TipoServico.Premier && festa is Casamento)
 		    {
 			    valorBebidas = new Dictionary<string, double>()
 			    {
