@@ -65,12 +65,6 @@ public class FestaRepository : IFestaRepository
 		}
 		catch (SqlException ex)
 		{
-			// Erro de chave estrangeira
-			if (ex.Number == 547)
-			{
-				throw new Exception("Impossível deletar a festa, pois existem eventos associados a ela");
-			}
-
 			throw new Exception("Erro ao inserir a festa " + ex.Message);
 		}
 		catch (FormatException)
