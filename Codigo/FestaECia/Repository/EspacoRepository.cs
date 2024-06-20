@@ -188,14 +188,8 @@ public class EspacoRepository : IEspacoRepository
             }
         }
         catch (SqlException ex)
-        {
-            // Erro de chave estrangeira
-            if (ex.Number == 547)
-            {
-                throw new Exception("Impossível deletar a festa, pois existem eventos associados a ela");
-            }
-
-            throw new Exception("Erro ao inserir a festa " + ex.Message);
+        { 
+	        throw new Exception("Erro ao marcar data no espaço " + ex.Message);
         }
         catch (FormatException ex)
         {
@@ -203,7 +197,7 @@ public class EspacoRepository : IEspacoRepository
         }
         catch (Exception ex)
         {
-            throw new Exception("Erro ao inserir festa no banco de dados " + ex.Message);
+            throw new Exception("Erro ao marcar data da festa no espaço " + ex.Message);
         }
     }
 
