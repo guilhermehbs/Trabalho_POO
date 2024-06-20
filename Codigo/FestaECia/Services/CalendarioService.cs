@@ -64,7 +64,7 @@ public class CalendarioService : ICalendarioService
 	{
 		try
 		{
-			if (Calendario.Datas.Count == 0) { throw new IndexOutOfRangeException("There are no scheduled dates"); }
+			if (Calendario.Datas.Count == 0) { throw new IndexOutOfRangeException("Não existe datas marcadas"); }
 			return Calendario.Datas[Calendario.Datas.Count - 1];
 		}
 		catch (Exception ex)
